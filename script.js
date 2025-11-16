@@ -1608,19 +1608,47 @@ async function deleteGiftWish(id) {
 document.addEventListener("DOMContentLoaded", () => {
     const introOverlay = document.getElementById("introOverlay");
     if (!introOverlay) return; // auf index.html z.B. gibt es das nicht
-    introOverlay.classList.remove("hidden");   // <--- NEU: Intro immer sichtbar machen
+
+    // NEU: Intro-Musik holen
+    const introAudio = document.getElementById("introMusic");
 
     introOverlay.classList.remove("hidden");
 
-    // >>> Scrollen unter dem Intro sperren
+    // Scrollen der Seite dahinter blockieren
     document.body.classList.add("noscroll");
-    window.scrollTo(0, 0); // sicherheitshalber ganz nach oben
+    window.scrollTo(0, 0);
+
+    // NEU: Musik starten (wenn Browser es erlaubt)
+    if (introAudio) {
+        introAudio.loop = true;
+        introAudio.volume = 0.05; // bisschen leiser
+        introAudio.play().catch(() => {
+            // viele Browser blocken Autoplay – ist nicht schlimm, dann bleibt es halt leise
+        });
+    }
+
+    function fadeOutAudio(audio, duration = 1500) {
+        const fadeSteps = 30;
+        const fadeInterval = duration / fadeSteps;
+        const fadeAmount = audio.volume / fadeSteps;
+
+        let fadeTimer = setInterval(() => {
+            if (audio.volume - fadeAmount > 0) {
+                audio.volume -= fadeAmount;
+            } else {
+                audio.volume = 0;
+                audio.pause();
+                clearInterval(fadeTimer);
+            }
+        }, fadeInterval);
+    }
 
 
     createHeartParticles();
 
     const introText = document.getElementById("introText");
     const introStartBtn = document.getElementById("introStartBtn");
+
 
     if (!introText || !introStartBtn) {
         introOverlay.classList.add("hidden");
@@ -1653,7 +1681,16 @@ document.addEventListener("DOMContentLoaded", () => {
         introOverlay.classList.add("hidden");
         document.body.classList.remove("noscroll");
         sessionStorage.removeItem("showIntro");
+
+
+
+        // NEU: Musik stoppen
+        const introAudio = document.getElementById("introMusic");
+        if (introAudio) {
+            fadeOutAudio(introMusic, 1800);
+        }
     }
+
 
     // Start-Button zuerst ausblenden
     introStartBtn.classList.remove("visible");

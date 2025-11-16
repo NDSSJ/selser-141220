@@ -1373,9 +1373,15 @@ footer {
     color: #ff2c9a;
 }
 
+/* Text erscheint + pulsiert leicht */
 .intro-text.show {
-    animation: introFadeIn 1.2s forwards;
+    animation:
+        introFadeIn 0.9s ease-out forwards,
+        /* einmaliger Fade-in */
+        introTextPulse 3s ease-in-out infinite 0.9s;
+    /* danach sanftes Pulsieren */
 }
+
 
 @keyframes introFadeIn {
     from {
@@ -1388,6 +1394,24 @@ footer {
         transform: translateY(0);
     }
 }
+
+@keyframes introTextPulse {
+    0% {
+        transform: scale(1);
+        text-shadow: 0 0 12px rgba(255, 44, 154, 0.5);
+    }
+
+    50% {
+        transform: scale(1.03);
+        text-shadow: 0 0 20px rgba(255, 44, 154, 0.9);
+    }
+
+    100% {
+        transform: scale(1);
+        text-shadow: 0 0 12px rgba(255, 44, 154, 0.5);
+    }
+}
+
 
 /* Weiter-Button */
 .intro-start-btn {
