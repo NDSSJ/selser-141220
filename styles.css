@@ -1547,3 +1547,54 @@ footer {
         transform: translateY(-50%) translateY(0) rotate(-45deg);
     }
 }
+
+/* ===================== MOBILE FIX FÜR INTRO ===================== */
+@media (max-width: 600px) {
+
+    /* Herz-Partikel kleiner & dichter */
+    #heartParticles {
+        transform: scale(0.7);
+    }
+
+    /* Herz-Container zentrieren */
+    .intro-heart-bg {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    /* ZENTRALE Box (Text + Button) perfekt mittig */
+    .intro-center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        width: 90%;
+    }
+
+    /* Text größer, fetter, mobil besser lesbar */
+    .intro-text {
+        font-size: 1.2rem;
+        font-weight: 700;
+        line-height: 1.35;
+    }
+
+    /* Weiter-Button mobil sauber */
+    .intro-start-btn {
+        margin-top: 1.3rem;
+        padding: 0.75rem 1.4rem;
+        font-size: 1.1rem;
+    }
+
+    /* Skip-Button nach oben in die Ecke */
+    .intro-skip-btn {
+        top: 12px;
+        right: 12px;
+        padding: 0.45rem 0.9rem;
+        font-size: 0.85rem;
+    }
+}
