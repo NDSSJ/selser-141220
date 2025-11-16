@@ -1610,6 +1610,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!introOverlay) return; // auf index.html z.B. gibt es das nicht
     introOverlay.classList.remove("hidden");   // <--- NEU: Intro immer sichtbar machen
 
+    introOverlay.classList.remove("hidden");
+
+    // >>> Scrollen unter dem Intro sperren
+    document.body.classList.add("noscroll");
+    window.scrollTo(0, 0); // sicherheitshalber ganz nach oben
+
 
     createHeartParticles();
 
@@ -1645,6 +1651,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function finishIntro() {
         if (timer) clearInterval(timer);
         introOverlay.classList.add("hidden");
+        document.body.classList.remove("noscroll");
         sessionStorage.removeItem("showIntro");
     }
 
