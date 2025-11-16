@@ -1721,8 +1721,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-
-
 // ==================== Wahrheit oder Pflicht ====================
 const wopData = {
     classic: {
