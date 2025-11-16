@@ -1266,7 +1266,13 @@ footer {
     align-items: center;
     justify-content: center;
     z-index: 4000;
+
+    /* NEU */
+    height: 100dvh;
+    overflow: hidden;
 }
+
+
 
 .intro-overlay.hidden {
     display: none;
@@ -1551,30 +1557,43 @@ footer {
 /* ===================== MOBILE FIX FÜR INTRO ===================== */
 @media (max-width: 600px) {
 
-    /* Herz-Partikel kleiner & dichter */
-    #heartParticles {
-        transform: scale(0.7);
-    }
-
-    /* Herz-Container zentrieren */
     .intro-heart-bg {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        position: relative;
         width: 100%;
         height: 100%;
         overflow: hidden;
+        transform: none;
+        /* NEU: verschieb das Herz nicht nach oben */
+        display: flex;
+        /* NEU: Inhalt zentrieren */
+        align-items: center;
+        /* NEU */
+        justify-content: center;
+        /* NEU */
     }
 
-    /* ZENTRALE Box (Text + Button) perfekt mittig */
+
+    #heartParticles {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.55);
+        /* mittig + etwas kleiner */
+        width: 100%;
+    }
+
+
+
+
     .intro-center {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        text-align: center;
         width: 90%;
+        text-align: center;
     }
+
 
     /* Text größer, fetter, mobil besser lesbar */
     .intro-text {
