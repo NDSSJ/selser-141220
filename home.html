@@ -285,7 +285,7 @@
                     ChatGPT Chats nicht... Außerdem muss ich mir noch überlegen was ich dir zum Jahrestag schenken will.
                     Es wird wahrscheinlich nichts großes, ich möchte lieber Geld sparen momentan selis. Das ist für uns,
                     du weißt das. Mal schauen auf was für eine Idee ich komme.
-                    
+
                 </p>
             </section>
 
@@ -1147,6 +1147,19 @@
 
             <!-- ==================== PANEL: LOCKED ==================== -->
             <div id="panel-locked" class="panel">
+
+                <div id="lockedOverlay" class="locked-overlay">
+                    <div class="locked-overlay-card">
+                        <h3>Kurzfilm entsperren 🔒</h3>
+                        <p>Gib das geheime Passwort ein 💚</p>
+
+                        <input type="password" id="lockedPassword" placeholder="Passwort" />
+                        <button id="lockedUnlockBtn">Freischalten</button>
+
+                        <p id="lockedError" class="locked-error"></p>
+                    </div>
+                </div>
+
                 <h2>Locked 🎬</h2>
                 <p class="locked-subtitle">
                     Eine kleine Filmsequenz nur für uns zwei.
@@ -1154,16 +1167,26 @@
 
                 <div class="locked-player">
                     <div class="locked-stage">
-                        <img id="lockedImage" class="locked-image hidden" src="" alt="Locked Moment">
-                        <div id="lockedText" class="locked-text"></div>
-                    </div>
+                        <img id="lockedImage" class="locked-image hidden" />
+                        <p id="lockedText" class="locked-text"></p>
 
+                        <!-- Hier einfügen -->
+                        <button id="lockedStartBtn" class="hidden">Kurzfilm starten</button>
+                    </div>
+                    <!-- Neuer Start-Button in der Mitte -->
                     <div class="locked-controls">
+                        <button id="lockedStartBtn" class="locked-btn locked-start-btn hidden" disabled>
+                            Kurzfilm starten
+                        </button>
+
                         <button id="lockedRestartBtn" class="locked-btn">
                             Nochmal von vorne
                         </button>
                     </div>
                 </div>
+                <!-- Hintergrundmusik für den Kurzfilm -->
+                <audio id="lockedMusic" src="Music/Anlatamam.mp3"></audio>
+
             </div>
 
 
