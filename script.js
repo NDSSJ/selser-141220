@@ -1075,6 +1075,7 @@ async function loadDailyMessages() {
 
 
 
+
 // ====================== ESSEN-ZETTEL (mit Kategorien + löschen) ======================
 async function loadEssenZettel(category = "hauptspeise") {
     if (!supabaseClient || !window.currentUser) return;
@@ -1612,8 +1613,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // NEU: Intro-Musik holen
     const introAudio = document.getElementById("introMusic");
 
-    introOverlay.classList.remove("hidden");
-
     // Scrollen der Seite dahinter blockieren
     document.body.classList.add("noscroll");
     window.scrollTo(0, 0);
@@ -1682,14 +1681,13 @@ document.addEventListener("DOMContentLoaded", () => {
         document.body.classList.remove("noscroll");
         sessionStorage.removeItem("showIntro");
 
-
-
         // NEU: Musik stoppen
         const introAudio = document.getElementById("introMusic");
         if (introAudio) {
-            fadeOutAudio(introMusic, 1800);
+            fadeOutAudio(introAudio, 1800);
         }
     }
+
 
 
     // Start-Button zuerst ausblenden
@@ -1810,6 +1808,8 @@ function setupWahrheitOderPflicht() {
     dareBtn.onclick = () => showQuestion("dare");
 }
 
+
+
 document.addEventListener("DOMContentLoaded", setupWahrheitOderPflicht);
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -1836,6 +1836,653 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+// ==================== LOCKED KURZFILM IM PANEL ====================
+(() => {
+    const panel = document.getElementById("panel-locked");
+    if (!panel) return;
+
+    const imgEl = document.getElementById("lockedImage");
+    const textEl = document.getElementById("lockedText");
+    const restartBtn = document.getElementById("lockedRestartBtn");
+
+    // 🔹 HIER DEINE SZENEN EINTRAGEN
+    // type: "text"  -> nur Text
+    // type: "image" -> Bild + Text
+    const lockedScenes = [
+        {
+            type: "text",
+            text: "Hello Selis"
+        },
+        {
+            type: "text",
+            text: "5 Jahre sind es mittlerweile..."
+        },
+        {
+            type: "text",
+            text: "5 lange Jahre, die sich dennoch so kurz anfühlten"
+        },
+        {
+            type: "text",
+            text: "Weil jeder Moment mit dir so schön war, dass die Zeit verflog."
+        },
+        {
+            type: "text",
+            text: "5 Jahre"
+        },
+        {
+            type: "text",
+            text: "die ich gerne wieder von vorn erleben würde"
+        },
+        {
+            type: "text",
+            text: "mit allen Höhen"
+        },
+        {
+            type: "text",
+            text: "sowie Tiefen"
+        },
+        {
+            type: "text",
+            text: "Versuch diesen Kurzfilm als kleinen Rückblick zu sehen"
+        },
+        {
+            type: "text",
+            text: "Als Rückblick auf unsere wunderschöne Zeit zusammen"
+        },
+        {
+            type: "text",
+            text: "Als Erinnerung, welche Momente wir schon geteilt haben"
+        },
+        {
+            type: "text",
+            text: "Und vorallem als Beweis, für so viel Liebe, die wir füreinander empfinden"
+        },
+        {
+            type: "text",
+            text: "Lass uns Anfangen..."
+        },
+        {
+            type: "text",
+            text: ""
+        },
+        {
+            type: "text",
+            text: "Spät im Jahr 2020..."
+        },
+        {
+            type: "text",
+            text: "Abitur Zeit ist vorbei"
+        },
+        {
+            type: "text",
+            text: "Sercan lag im Bett, unmotiviert wie immer"
+        },
+        {
+            type: "text",
+            text: "Plötzlich klingelte sein Handy"
+        },
+        {
+            type: "image",
+            src: "Images/Szene1.png"
+        },
+        {
+            type: "text",
+            text: "Ein Tag wie jeder andere, aber eine Nachricht welche ihn immer veränderte"
+        },
+        {
+            type: "text",
+            text: "Langsam nahm er sein Handy in die Hand und las die Nachricht"
+        },
+        {
+            type: "text",
+            text: "'Von wem ist denn die Nachricht jetzt?'"
+        },
+        {
+            type: "image",
+            src: "Images/Szene2.png",
+        },
+        {
+            type: "text",
+            text: "'Delinayim?' Er freute sich riesig, ein lächeln breitete sich auf seinem Gesicht aus"
+        },
+        {
+            type: "image",
+            src: "Images/Szene3.png",
+        },
+        {
+            type: "text",
+            text: "Sie schrieb ihm das übliche, das was beide immer taten als beste Freunde"
+        },
+        {
+            type: "image",
+            src: "Images/Szene4.png",
+        },
+        {
+            type: "text",
+            text: "Glücklich las er die Nachricht, jetzt wird Supernatural geschaut"
+        },
+        {
+            type: "image",
+            src: "Images/Szene5.png",
+        },
+        {
+            type: "text",
+            text: "So lagen beide in getrennten Betten, Hunderte sogar Tausende Kilometer entfernt"
+        },
+        {
+            type: "text",
+            text: "Aber im Herzen waren sie am selben Ort"
+        },
+        {
+            type: "image",
+            src: "Images/Szene6.png",
+        },
+        {
+            type: "text",
+            text: "Und so zog sich das ganze über Wochen und Monate"
+        },
+        {
+            type: "text",
+            text: "Wochen und Monate voller Nachrichten, Anrufe und Videochats"
+        },
+        {
+            type: "text",
+            text: "Wochen und Monate voller Lachen, Spaß und Liebe"
+        },
+        {
+            type: "text",
+            text: "Aber auch Wochen und Monate voller trauriger Momente"
+        },
+        {
+            type: "text",
+            text: "Aber ist es nicht das, was beide so stark gemacht hat?"
+        },
+        {
+            type: "text",
+            text: ""
+        },
+        {
+            type: "text",
+            text: ""
+        },
+        {
+            type: "text",
+            text: "14.12.2020"
+        },
+        {
+            type: "text",
+            text: "4:59"
+        },
+        {
+            type: "text",
+            text: "Nach Stunden langem schreiben"
+        },
+        {
+            type: "text",
+            text: "Nach Stunden langem Audios austausch"
+        },
+        {
+            type: "text",
+            text: "Nach Stunden langem zögern"
+        },
+        {
+            type: "text",
+            text: "Kam endlich die Frage"
+        },
+        {
+            type: "text",
+            text: "Eine Frage, welche beide verändern sollte"
+        },
+        {
+            type: "text",
+            text: "Für den Moment war es schwer"
+        },
+        {
+            type: "text",
+            text: "Doch für beide war es das Richtige..."
+        },
+        {
+            type: "image",
+            src: "Images/Szene7.png",
+        },
+        {
+            type: "text",
+            text: "'Willst du eine Anspielung? Ich liebe dich Selinay, willst du meine Freundin sein, erstmal inoffiziell bis wir uns treffen'"
+        },
+        {
+            type: "text",
+            text: "Das war der genaue Wortlaut."
+        },
+        {
+            type: "text",
+            text: "Und die Antwort?"
+        },
+        {
+            type: "image",
+            src: "Images/Szene8.png",
+        },
+        {
+            type: "text",
+            text: "'Omg sercan ja ich will deine Freundin sein"
+        },
+        {
+            type: "text",
+            text: "Liebe ist was wunderschönes, oder nicht?"
+        },
+        {
+            type: "text",
+            text: "Die ersten Momente waren geheim, doch es dauert nicht lange bis die Familien davon erfuhren"
+        },
+        {
+            type: "text",
+            text: ""
+        },
+        {
+            type: "text",
+            text: "Eine kalte Jahreszeit begann"
+        },
+        {
+            type: "text",
+            text: "Sie hatten keine andere Wahl als sich draußen zu treffen"
+        },
+        {
+            type: "text",
+            text: "So gingen sie spazieren, im Schnee"
+        },
+        {
+            type: "image",
+            src: "Images/Szene9.png",
+        },
+        {
+            type: "text",
+            text: "Nach einer Weile wollten sie sich erholen..."
+        },
+        {
+            type: "text",
+            text: "auf einer Bank, auf DER Bank"
+        },
+        {
+            type: "image",
+            src: "Images/Szene10.png",
+        },
+        {
+            type: "text",
+            text: "Ein unvergesslicher Moment..."
+        },
+        {
+            type: "text",
+            text: "Zwei Omis sagten 'Ihr seid aber süß zusammen!'"
+        },
+        {
+            type: "image",
+            src: "Images/Szene11.png",
+        },
+        {
+            type: "text",
+            text: "Sie redeten und lachten"
+        },
+        {
+            type: "text",
+            text: "Doch etwas fehlte..."
+        },
+        {
+            type: "text",
+            text: "Ein Ort, eine Bank, ein Treffen"
+        },
+        {
+            type: "text",
+            text: "Wird er es tun?"
+        },
+        {
+            type: "text",
+            text: "verunsichert fragte er plötzlich"
+        },
+        {
+            type: "image",
+            src: "Images/Szene12.png",
+        },
+        {
+            type: "text",
+            text: "Ein Moment, auf den Selinay wartete"
+        },
+        {
+            type: "text",
+            text: "Und so passierte es"
+        },
+        {
+            type: "image",
+            src: "Images/Szene13.png",
+        },
+        {
+            type: "text",
+            text: "Der erste Kuss"
+        },
+        {
+            type: "text",
+            text: ""
+        },
+        {
+            type: "text",
+            text: "Monate vergingen"
+        },
+        {
+            type: "text",
+            text: "14.02.2021"
+        },
+        {
+            type: "text",
+            text: "Der Tag, an dem sie sich morgen im Auto den Arsch abfroren"
+        },
+        {
+            type: "text",
+            text: "Stundenlang nur die beiden"
+        },
+        {
+            type: "text",
+            text: "Zwei verliebte und Geschenke"
+        },
+        {
+            type: "image",
+            src: "Images/Szene14.png",
+        },
+        {
+            type: "text",
+            text: "Nach paar Problemen mit dem Auto, war der erste Valentinstag somit vorbei und der erste Geburtstag stand bevor"
+        },
+        {
+            type: "text",
+            text: "08.04.2021"
+        },
+        {
+            type: "text",
+            text: "Die beiden wollten Zeit für sich haben"
+        },
+        {
+            type: "text",
+            text: "Mieteten einen Raum für ein paar Stunden"
+        },
+        {
+            type: "text",
+            text: "Sercan hatte noch keine Ahnung was passieren würde"
+        },
+        {
+            type: "text",
+            text: "Er ging Selinay was zu trinken holen, weil sie durstig wurde"
+        },
+        {
+            type: "text",
+            text: "Als er zurückkam, hatte Selinay schon alles vorbereitet"
+        },
+        {
+            type: "image",
+            src: "Images/Szene15.png"
+        },
+        {
+            type: "text",
+            text: "Das erste Partner Armband"
+        },
+        {
+            type: "text",
+            text: "Ein wunderschöner Tag"
+        },
+        {
+            type: "text",
+            text: "Danke"
+        },
+        {
+            type: "text",
+            text: "Es vergingen wieder Monate"
+        },
+        {
+            type: "text",
+            text: "Monate der liebe"
+        },
+        {
+            type: "text",
+            text: "bis zum..."
+        },
+        {
+            type: "text",
+            text: "13.07.2021"
+        },
+        {
+            type: "text",
+            text: "Ein kleines Date, Kino am Abend"
+        },
+        {
+            type: "text",
+            text: "Sehr bescheiden für den Anfang, aber eine Sache war anders für Sercan"
+        },
+        {
+            type: "text",
+            text: "Es war seine erste Torte jemals, die er machen ließ und jemanden schenkte"
+        },
+        {
+            type: "image",
+            src: "Images/Szene16.png"
+        },
+        {
+            type: "text",
+            text: "Zwei Bären symbolisch für Sercan und Selinay"
+        },
+        {
+            type: "text",
+            text: "Selinay bewahrte die Figuren noch lange danach auf"
+        },
+        {
+            type: "text",
+            text: "In den ganzen 5 Jahren gab es natürlich so einige Momente..."
+        },
+        {
+            type: "text",
+            text: "Das erste Mal Kirmes"
+        },
+        {
+            type: "image",
+            src: "Images/Szene17.png"
+        },
+        {
+            type: "image",
+            src: "Images/Szene18.png"
+        },
+        {
+            type: "image",
+            src: "Images/Szene21.png"
+        },
+        {
+            type: "text",
+            text: "Sercan's Führerschein"
+        },
+        {
+            type: "image",
+            src: "Images/Szene20.png"
+        },
+        {
+            type: "text",
+            text: "Erstes Mal Picknicken"
+        },
+        {
+            type: "image",
+            src: "Images/Szene19.png"
+        },
+        {
+            type: "text",
+            text: "Erstmal mal Weihnachtsmarkt"
+        },
+        {
+            type: "image",
+            src: "Images/Szene22.png"
+        },
+        {
+            type: "text",
+            text: "Und unendlich weitere Treffen"
+        },
+        {
+            type: "image",
+            src: "Images/Szene23.png"
+        },
+        {
+            type: "image",
+            src: "Images/Szene24.png"
+        },
+        {
+            type: "image",
+            src: "Images/Szene25.png"
+        },
+        {
+            type: "image",
+            src: "Images/Szene26.png"
+        },
+        {
+            type: "image",
+            src: "Images/Szene27.png"
+        },
+        {
+            type: "image",
+            src: "Images/Szene28.png"
+        },
+        {
+            type: "image",
+            src: "Images/Szene29.png"
+        },
+        {
+            type: "image",
+            src: "Images/Szene30.png"
+        },
+        {
+            type: "image",
+            src: "Images/Szene31.png"
+        },
+        {
+            type: "image",
+            src: "Images/Szene32.png"
+        },
+        {
+            type: "text",
+            text: "Und es kommt noch so viel mehr..."
+        },
+        {
+            type: "text",
+            text: "Das war's bis jetzt"
+        },
+        {
+            type: "text",
+            text: "To be continued...?"
+        },
+        {
+            type: "text",
+            text: "END"
+        },
+
+
+
+
+
+
+
+
+
+
+    ];
+
+    let index = 0;
+    let timer = null;
+    let running = false;
+
+    const SCENE_DURATION = 1000; // 5 Sekunden pro Szene
+
+    function clearAnim() {
+        if (imgEl) {
+            imgEl.classList.remove("locked-show", "locked-fade-out", "hidden");
+        }
+        if (textEl) {
+            textEl.classList.remove("locked-show", "locked-fade-out");
+        }
+    }
+
+    function showScene(i) {
+        const scene = lockedScenes[i];
+        if (!scene || !textEl || !imgEl) return;
+
+        clearAnim();
+
+        // erstmal zurücksetzen
+        imgEl.classList.add("hidden");
+        imgEl.style.opacity = "0";
+        textEl.style.opacity = "0";
+
+        if (scene.type === "text") {
+            textEl.textContent = scene.text || "";
+            textEl.classList.add("locked-show");
+        } else if (scene.type === "image") {
+            imgEl.src = scene.src || "";
+            imgEl.classList.remove("hidden");
+            imgEl.classList.add("locked-show");
+            textEl.textContent = scene.text || "";
+            textEl.classList.add("locked-show");
+        }
+
+        // Nächste Szene automatisch nach SCENE_DURATION
+        clearTimeout(timer);
+        timer = setTimeout(nextScene, SCENE_DURATION);
+    }
+
+    function nextScene() {
+        // erst kurz ausblenden, dann weiterschalten
+        if (textEl) textEl.classList.add("locked-fade-out");
+        if (imgEl) imgEl.classList.add("locked-fade-out");
+
+        setTimeout(() => {
+            index++;
+            if (index >= lockedScenes.length) {
+                // am Ende bleiben wir einfach stehen (kein Loop)
+                clearTimeout(timer);
+                running = false;
+            } else {
+                showScene(index);
+            }
+        }, 650);
+    }
+
+    function startLockedMovie() {
+        if (running) return;
+        running = true;
+        index = 0;
+        showScene(index);
+    }
+
+    function stopLockedMovie() {
+        running = false;
+        clearTimeout(timer);
+        clearAnim();
+    }
+
+    function restartLockedMovie() {
+        stopLockedMovie();
+        startLockedMovie();
+    }
+
+    // Restart-Button
+    if (restartBtn) {
+        restartBtn.addEventListener("click", restartLockedMovie);
+    }
+
+    // ▶️ automatisch starten, wenn Panel sichtbar (class "active" bekommt)
+    const obs = new MutationObserver(() => {
+        if (panel.classList.contains("active")) {
+            startLockedMovie();
+        } else {
+            stopLockedMovie();
+        }
+    });
+
+    obs.observe(panel, { attributes: true, attributeFilter: ["class"] });
+
+    // falls Locked beim Laden schon aktiv ist
+    if (panel.classList.contains("active")) {
+        startLockedMovie();
+    }
+})();
 
 
 

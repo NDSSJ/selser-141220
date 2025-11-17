@@ -17,7 +17,7 @@
 <body class="needs-auth">
 
     <!-- ===================== INTRO-OVERLAY ===================== -->
-    <div class="intro-overlay hidden" id="introOverlay">
+    <div class="intro-overlay" id="introOverlay">
         <button id="introSkipBtn" class="intro-skip-btn">Skip</button>
 
         <div class="intro-content">
@@ -273,6 +273,19 @@
                     <br> Jetzt ist mir spontan was geiles eingefallen, mal gucken ob ich das umsetzen kann das klingt
                     schwierig: Einen Kurufilm über unsere Story. WOWI, bisschen animiert undso, mal schauen was ich tun
                     kann.
+                </p>
+                ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                <p> <strong>(17.11.2025)</strong>
+                    Das mit dem Kurzfilm funktioniert leider nicht so wie gedacht, zumindest kriege ich das nicht so
+                    hin...
+                    <br> Ich mache es deswegen etwas anders. Mal schauen ob es dir gefällt. Danach müsste ich eigentlich
+                    nur noch die ganzen Datenbanken mit den Daten füllen und das wärs. Klingt nach wenig aber das wird
+                    richtig schlimm hahahah. Naja da muss ich auch durch.
+                    <br> Meine Gedanken momentan sind folgende: Ich hoffe es klappt alles, ich hoffe sie sieht die
+                    ChatGPT Chats nicht... Außerdem muss ich mir noch überlegen was ich dir zum Jahrestag schenken will.
+                    Es wird wahrscheinlich nichts großes, ich möchte lieber Geld sparen momentan selis. Das ist für uns,
+                    du weißt das. Mal schauen auf was für eine Idee ich komme.
+                    
                 </p>
             </section>
 
@@ -1132,31 +1145,27 @@
                 </div>
             </section>
 
-            <section class="panel" id="panel-locked">
-                <h2>🔒 Locked</h2>
+            <!-- ==================== PANEL: LOCKED ==================== -->
+            <div id="panel-locked" class="panel">
+                <h2>Locked 🎬</h2>
                 <p class="locked-subtitle">
-                    Ein kleiner animierter Kurzfilm, nur für uns zwei.
+                    Eine kleine Filmsequenz nur für uns zwei.
                 </p>
 
-                <div class="locked-scene-wrapper">
-                    <div class="locked-scene">
-                        <!-- Layer für die „Film-Bühne“ -->
-                        <div class="locked-sky"></div>
-                        <div class="locked-ground"></div>
+                <div class="locked-player">
+                    <div class="locked-stage">
+                        <img id="lockedImage" class="locked-image hidden" src="" alt="Locked Moment">
+                        <div id="lockedText" class="locked-text"></div>
+                    </div>
 
-                        <!-- Platz für Charaktere / Objekte – kommt später -->
-                        <div class="locked-characters">
-                            <div class="locked-char locked-char-left"></div>
-                            <div class="locked-char locked-char-right"></div>
-                        </div>
-
-                        <!-- später vielleicht Text-Bubbles etc. -->
-                        <div class="locked-caption">
-                            Hier startet bald euer Kurzfilm…
-                        </div>
+                    <div class="locked-controls">
+                        <button id="lockedRestartBtn" class="locked-btn">
+                            Nochmal von vorne
+                        </button>
                     </div>
                 </div>
-            </section>
+            </div>
+
 
 
 
@@ -1168,6 +1177,8 @@
     <!-- Script immer kurz vor </body> -->
     <!-- CDN: Supabase JS -->
     <script src="script.js"></script>
+
+
 </body>
 
 </html>
