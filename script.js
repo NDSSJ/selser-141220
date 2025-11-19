@@ -357,10 +357,6 @@ updateRightText(current);
 })();
 
 // ===== Eingabe -> Popup =====-----------------------------------------------------------
-
-// 1) Hier definierst du, WAS gelten soll.
-//    Groß/Kleinschreibung egal (wir vergleichen in lowercase).
-// ===== Eingabe -> Popup + Loader =====
 const SECRET_A = "sercan";   // dein Name 1
 const SECRET_B = "selinay";     // dein Name 2
 
@@ -523,8 +519,8 @@ if (wheelCanvas) {
         "Du schuldest mir was 😉",
         "Ich singe für dich 🎤",
         "Dummes Foto für Sticker 🤳",
-        "Hi",
-        "bye"
+        "'Du hast Recht' Gutschein🎟️",
+        "Pech, heute nichts 🐦‍⬛"
     ];
 
     const numSectors = sectors.length;
@@ -670,174 +666,60 @@ if (wheelCanvas) {
 
     // HIER deine Karten – jetzt MIT note 👇
     const quotes = [
-        {
-            text: "Rate mal wer etwas zu spät kommt",
-            author: "selinay",
-            year: "2019",
-            note: "Das hast zwar du geschrieben, aber meine Antwort war: Du kannst direkt auch raten haha"
-        },
-        {
-            text: "Die Aufgaben die ich kann wirst du schon abschreiben können",
-            author: "selinay",
-            year: "2019",
-            note: "Ich hatte Angst in Chemie nicht abschreiben zu können"
-        },
-        {
-            text: "Guten Morgen willst du vorbei kommen?",
-            author: "selinay",
-            year: "2019",
-            note: "Ich wünschte es wäre in einem anderen Kontext, aber du hast mich nur zum lernen gerufen"
-        },
-        {
-            text: "Hast du irgendwas wichtiges aufgeschrieben",
-            author: "sercan",
-            year: "2019",
-            note: "Hab dich wieder mal nach Schulstoff gefragt weil ich nicht da war"
-        },
-        {
-            text: "Schön positiv denken",
-            author: "selinay",
-            year: "2020",
-            note: "Eine Selinay die versucht mich aufzumuntern nach einer schlechten Chemie Klausur"
-        },
-        {
-            text: "Ich bewerbe mich auch für Jura undso einfach hahaha",
-            author: "sercan",
-            year: "2020",
-            note: "Bewerbungen für Uni Studiengang (Hab mich niemals für Jura beworben leider)"
-        },
-        {
-            text: "Egal ich schenke dir einfach wieder ein Ring aus einem Radiergummi und einer Büroklammer",
-            author: "sercan",
-            year: "2020",
-            note: "Du hast mir zu spät gesagt dass es sich bei dem Treffen in deinem Garten um deinen Geburtstag handelt. Meine Spontane Idee war dann das"
-        },
-        {
-            text: "Das ist echt Dorf türkisch was die sprechen",
-            author: "selinay",
-            year: "2019",
-            note: "DAS HAST DU ZU DEINER EIGENEN MAMA GESAGT!!!! DU HAST ANGEFANGEN"
-        },
-        {
-            text: "Jetzt haben wir genuuuuug Bilder",
-            author: "selinay",
-            year: "2020",
-            note: "JAAA DU HAST ES SELBER GESAGT! Das war nachdem wir zusammen Bilder in deinem Garten gemacht haben"
-        },
-        {
-            text: "2 Tonnen Makeup klärt schon",
-            author: "selinay",
-            year: "2020",
-            note: "Wir hatten damals den Plan dich mit Cagatay Ulusoy zu verkuppeln. Jetzt ist dein Freund sogar noch geiler"
-        },
-        {
-            text: "Ok reicht von mir aus genug genervt du tust mir auch leid grad",
-            author: "selinay",
-            year: "2020",
-            note: "Da waren wir noch nicht zusammen, jetzt hör ich sowas niemals HAHAHAHHA"
-        },
-        {
-            text: "Wenn du morgen nicht kommst, bin ich auch nicht dabei",
-            author: "sercan",
-            year: "2020",
-            note: "Anca Beraber kanca beraber. Ich bin nirgendwo wo meine süße Maus nicht auch ist!"
-        },
-        {
-            text: "Ich hasse niemanden, hass ist ein starker Begriff",
-            author: "sercan",
-            year: "2020",
-            note: "Will den Kontext nicht geben, aber ich bin NICHT Goethe. Ich hasse z.B. Ju..."
-        },
-        {
-            text: "Merk dir eins, wenn ich dich jemals anlügen sollte, allah belami versin",
-            author: "sercan",
-            year: "2020",
-            note: "Du hast gefragt ob Berkant Gefühle für Kaley hat und ich meinte nein HAHAHAHHA, daraufhin hast du mir erstmal nicht geglaubt"
-        },
-        {
-            text: "Ich weiß wann du Geburtstag hast, soll ich aus Favoriten raus tun als Beweis?",
-            author: "sercan",
-            year: "2020",
-            note: "Ich hab safe nur gehofft dass du nein sagst, konnte mir niemals deinen Geburtstag merken HAHAHAHA"
-        },
-        {
-            text: "Wichtige Sachen haben einen extra Platz in meinem Hirn",
-            author: "sercan",
-            year: "2020",
-            note: "Habe mich an deinen Geburtstag erinnert + daran, dass ich dir den Radiergummi Ring schenken wollte (Hab es aber am Ende nicht getan HAHAHAH)"
-        },
-        {
-            text: "Du hast mich echt zum Lachen gebracht",
-            author: "sercan",
-            year: "2020",
-            note: "Kann sein erstes Mal dass ich wegen dir gelacht habe HAHAHAHHA, wir waren Supernatural am gucken und du hast nen Witz gebracht"
-        },
-        {
-            text: "Ich will dich noch behalten",
-            author: "selinay",
-            year: "2020",
-            note: "Du hast mich behalten... Du hast was süßes gesagt, ich meinte mein Herz schmilzt. Daraufhin hast du gesagt dass du mich noch behalten willst"
-        },
-        {
-            text: "NEINNNN Was mache ich ohne dich",
-            author: "selinay",
-            year: "2020",
-            note: "Du warst schon flirty. Das war so mitte Oktober, da stand jemand schon bisschen auf mich, du hast das öfter gesagt zu der Zeit"
-        },
-        {
-            text: "Ey ohne witz mach nicht so... ich will dich nicht verlieren...",
-            author: "sercan",
-            year: "2020",
-            note: "Hatten gestritten wegen etwas kleinem, wir waren zu süß damals"
-        },
-        {
-            text: "Ich kann es nicht glauben dass ich es dir gerade geschickt habe",
-            author: "selinay",
-            year: "2020",
-            note: "Du hast mir Editierte Fotos geschickt wie du mit kurzen Haaren aussehen würdest, du meintest das ist komisch das einem Jungen zu schicken. Ich war so verliebt, die Fotos waren wow"
-        },
-        {
-            text: "Wir werden alt",
-            author: "sercan",
-            year: "2021",
-            note: "schon vor 4 Jahren gesagt weil wir morgens noch müde waren nach dem aufstehen HAHAHAHHA guck uns heute mal an 24/7 müde"
-        },
-        {
-            text: "Ich will Lasagne",
-            author: "selinay",
-            year: "2021",
-            note: "Was für Kontext, du hast das einfach so um 0Uhr rausgehauen HAHAHAHAHHA"
-        },
-        {
-            text: "Sana ceza vermek istiyorum",
-            author: "selinay",
-            year: "2022",
-            note: "Mommy? HAHAHAHHA Ich war lange draußen und hab nicht geantwortet dann warst du unnormal sauer, hat was wenn ich das gerade so wieder lese oh"
-        },
-        {
-            text: "Dann gucken wir Saw 1",
-            author: "selinay",
-            year: "2022",
-            note: " JA DAS HAST DU GESAGT!!!! Mit 20 warst du weniger schisser als jetzt!"
-        },
-        {
-            text: "Ich würde kein Tattoo machen wenn wir nur ein Paar sind",
-            author: "sercan",
-            year: "2021",
-            note: "Ja guuuut, die Meinung hat sich geändert HAHAHAH"
-        },
-        {
-            text: "Komm Discord",
-            author: "sercan",
-            year: "2019",
-            note: "Ganz frühe Gaming-Zeit 😎"
-        },
-        {
-            text: "Komm Discord",
-            author: "sercan",
-            year: "2019",
-            note: "Ganz frühe Gaming-Zeit 😎"
-        },
+        {text: "Rate mal wer etwas zu spät kommt", author: "selinay", year: "2019", 
+            note: "Das hast zwar du geschrieben, aber meine Antwort war: Du kannst direkt auch raten haha"},
+        {text: "Die Aufgaben die ich kann wirst du schon abschreiben können", author: "selinay", year: "2019", 
+            note: "Ich hatte Angst in Chemie nicht abschreiben zu können"},
+        {text: "Guten Morgen willst du vorbei kommen?", author: "selinay", year: "2019", 
+            note: "Ich wünschte es wäre in einem anderen Kontext, aber du hast mich nur zum lernen gerufen"},
+        {text: "Hast du irgendwas wichtiges aufgeschrieben", author: "sercan", year: "2019", 
+            note: "Hab dich wieder mal nach Schulstoff gefragt weil ich nicht da war"},
+        {text: "Schön positiv denken", author: "selinay", year: "2020", 
+            note: "Eine Selinay die versucht mich aufzumuntern nach einer schlechten Chemie Klausur"},
+        {text: "Ich bewerbe mich auch für Jura undso einfach hahaha", author: "sercan", year: "2020", 
+            note: "Bewerbungen für Uni Studiengang (Hab mich niemals für Jura beworben leider)"},
+        {text: "Egal ich schenke dir einfach wieder ein Ring aus einem Radiergummi und einer Büroklammer", author: "sercan", year: "2020", 
+            note: "Du hast mir zu spät gesagt dass es sich bei dem Treffen in deinem Garten um deinen Geburtstag handelt. Meine Spontane Idee war dann das"},
+        {text: "Das ist echt Dorf türkisch was die sprechen", author: "selinay", year: "2019", 
+            note: "DAS HAST DU ZU DEINER EIGENEN MAMA GESAGT!!!! DU HAST ANGEFANGEN"},
+        {text: "Jetzt haben wir genuuuuug Bilder", author: "selinay", year: "2020", 
+            note: "JAAA DU HAST ES SELBER GESAGT! Das war nachdem wir zusammen Bilder in deinem Garten gemacht haben"},
+        {text: "2 Tonnen Makeup klärt schon", author: "selinay", year: "2020", 
+            note: "Wir hatten damals den Plan dich mit Cagatay Ulusoy zu verkuppeln. Jetzt ist dein Freund sogar noch geiler"},
+        {text: "Ok reicht von mir aus genug genervt du tust mir auch leid grad", author: "selinay", year: "2020", 
+            note: "Da waren wir noch nicht zusammen, jetzt hör ich sowas niemals HAHAHAHHA"},
+        {text: "Wenn du morgen nicht kommst, bin ich auch nicht dabei", author: "sercan", year: "2020", 
+            note: "Anca Beraber kanca beraber. Ich bin nirgendwo wo meine süße Maus nicht auch ist!"},
+        {text: "Ich hasse niemanden, hass ist ein starker Begriff", author: "sercan", year: "2020", 
+            note: "Will den Kontext nicht geben, aber ich bin NICHT Goethe. Ich hasse z.B. Ju..."},
+        {text: "Merk dir eins, wenn ich dich jemals anlügen sollte, allah belami versin", author: "sercan", year: "2020", 
+            note: "Du hast gefragt ob Berkant Gefühle für Kaley hat und ich meinte nein HAHAHAHHA, daraufhin hast du mir erstmal nicht geglaubt"},
+        {text: "Ich weiß wann du Geburtstag hast, soll ich aus Favoriten raus tun als Beweis?", author: "sercan", year: "2020", 
+            note: "Ich hab safe nur gehofft dass du nein sagst, konnte mir niemals deinen Geburtstag merken HAHAHAHA"},
+        {text: "Wichtige Sachen haben einen extra Platz in meinem Hirn", author: "sercan", year: "2020",
+            note: "Habe mich an deinen Geburtstag erinnert + daran, dass ich dir den Radiergummi Ring schenken wollte (Hab es aber am Ende nicht getan HAHAHAH)"},
+        {text: "Du hast mich echt zum Lachen gebracht", author: "sercan", year: "2020",
+            note: "Kann sein erstes Mal dass ich wegen dir gelacht habe HAHAHAHHA, wir waren Supernatural am gucken und du hast nen Witz gebracht"},
+        {text: "Ich will dich noch behalten", author: "selinay", year: "2020",
+            note: "Du hast mich behalten... Du hast was süßes gesagt, ich meinte mein Herz schmilzt. Daraufhin hast du gesagt dass du mich noch behalten willst"},
+        {text: "NEINNNN Was mache ich ohne dich", author: "selinay", year: "2020",
+            note: "Du warst schon flirty. Das war so mitte Oktober, da stand jemand schon bisschen auf mich, du hast das öfter gesagt zu der Zeit"},
+        {text: "Ey ohne witz mach nicht so... ich will dich nicht verlieren...", author: "sercan", year: "2020",
+            note: "Hatten gestritten wegen etwas kleinem, wir waren zu süß damals"},
+        {text: "Ich kann es nicht glauben dass ich es dir gerade geschickt habe", author: "selinay", year: "2020", 
+            note: "Du hast mir Editierte Fotos geschickt wie du mit kurzen Haaren aussehen würdest, du meintest das ist komisch das einem Jungen zu schicken. Ich war so verliebt, die Fotos waren wow"},
+        {text: "Wir werden alt", author: "sercan", year: "2021", 
+            note: "schon vor 4 Jahren gesagt weil wir morgens noch müde waren nach dem aufstehen HAHAHAHHA guck uns heute mal an 24/7 müde"},
+        {text: "Ich will Lasagne", author: "selinay", year: "2021", 
+            note: "Was für Kontext, du hast das einfach so um 0Uhr rausgehauen HAHAHAHAHHA"},
+        {text: "Sana ceza vermek istiyorum", author: "selinay", year: "2022", 
+            note: "Mommy? HAHAHAHHA Ich war lange draußen und hab nicht geantwortet dann warst du unnormal sauer, hat was wenn ich das gerade so wieder lese oh"},
+        {text: "Dann gucken wir Saw 1", author: "selinay", year: "2022", 
+            note: " JA DAS HAST DU GESAGT!!!! Mit 20 warst du weniger schisser als jetzt!"},
+        {text: "Ich würde kein Tattoo machen wenn wir nur ein Paar sind", author: "sercan", year: "2021", 
+            note: "Ja guuuut, die Meinung hat sich geändert HAHAHAH"},
+        {text: "Komm Discord", author: "sercan", year: "2019", note: "Ganz frühe Gaming-Zeit 😎"},
+        {text: "Komm Discord", author: "sercan", year: "2019", note: "Ganz frühe Gaming-Zeit 😎"},
     ];
 
     let order = quotes.map((_, i) => i).sort(() => Math.random() - 0.5);
@@ -1620,7 +1502,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // NEU: Musik starten (wenn Browser es erlaubt)
     if (introAudio) {
         introAudio.loop = true;
-        introAudio.volume = 0.05; // bisschen leiser
+        introAudio.volume = 0.01; // bisschen leiser
         introAudio.play().catch(() => {
             // viele Browser blocken Autoplay – ist nicht schlimm, dann bleibt es halt leise
         });
@@ -1706,7 +1588,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             showSlide();
         }
-    }, 6000); // 5 Sekunden
+    }, 4000); // 5 Sekunden
 
     // „Los geht's“ schließt das Intro
     introStartBtn.addEventListener("click", finishIntro);
@@ -1864,15 +1746,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function stopLockedMusic() {
         if (!musicEl) return;
-        musicEl.pause();
-        musicEl.currentTime = 0;
+        fadeOutMusic(musicEl, 1500); // 1500 = 1.5 Sekunden Fade-Out
     }
 
+    function fadeOutMusic(audio, duration = 1500) {
+        const steps = 30;
+        const stepTime = duration / steps;
+        const volumeStep = audio.volume / steps;
+
+        let i = 0;
+
+        const fadeInterval = setInterval(() => {
+            i++;
+
+            audio.volume = Math.max(0, audio.volume - volumeStep);
+
+            if (i >= steps) {
+                clearInterval(fadeInterval);
+                audio.pause();
+                audio.currentTime = 0;
+                audio.volume = 0.25; // Ausgangslautstärke wiederherstellen
+            }
+        }, stepTime);
+    }
 
     // Standarddauer, wenn in der Szene nichts angegeben ist
     const SCENE_DURATION = 5000;
 
-    // 🔹 DEINE SZENEN – 1:1 aus deinem Code übernommen
     const lockedScenes = [
         { type: "text", text: "Hello Selis", duration: 5000 },
         { type: "text", text: "5 Jahre sind es mittlerweile...,", duration: 5000 },
@@ -1891,7 +1791,7 @@ document.addEventListener("DOMContentLoaded", () => {
         { type: "text", text: "Spät im Jahr 2020...", duration: 5000 },
         { type: "text", text: "Abitur Zeit ist vorbei", duration: 5000 },
         { type: "text", text: "Sercan lag im Bett, unmotiviert wie immer", duration: 5000 },
-        { type: "image", src: "Images/Szene1.png", duration: 5000 },
+        { type: "image", src: "Images/Szene1.png", duration: 3000 },
         { type: "text", text: "Plötzlich klingelte sein Handy", duration: 5000 },
         { type: "text", text: "Ein Tag wie jeder andere, aber eine Nachricht welche ihn immer veränderte", duration: 5000 },
         { type: "text", text: "Langsam nahm er sein Handy in die Hand und las die Nachricht", duration: 5000 },

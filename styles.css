@@ -1371,7 +1371,10 @@ footer {
     max-width: 28ch;
     line-height: 1.25;
     color: #ff2c9a;
+    opacity: 0;
+    /* NEU: standardmäßig unsichtbar */
 }
+
 
 /* Text erscheint + pulsiert leicht */
 .intro-text.show {
