@@ -138,9 +138,9 @@ body {
 }
 
 
+/* Sidebar mit Scrollen */
 .sidebar {
     position: fixed;
-    /* <- neu */
     top: 0;
     left: 0;
     height: 100vh;
@@ -150,8 +150,10 @@ body {
     display: flex;
     flex-direction: column;
     transition: width .3s ease;
-    overflow: hidden;
+    overflow-y: auto;
+    /* Ermöglicht vertikales Scrollen */
     z-index: 1000;
+    scroll-behavior: smooth;
 }
 
 .sidebar.collapsed {
@@ -200,9 +202,36 @@ body {
     color: var(--text);
     box-shadow: none;
     border: 1px solid rgba(255, 255, 255, 0.589);
+
+    /* ================================
+        Sidebarscroll
+================================ */
+
+    /* Verhindere Scrollen der Main-Seite, wenn über die Sidebar gehovt wird */
+    .layout:hover .content {
+        overflow: hidden;
+        /* Verhindert, dass die Seite scrollt */
+    }
+
+    /* Wenn man in der Sidebar selbst ist, kann sie scrollen */
+    .sidebar:hover {
+        overflow-y: auto;
+        /* Nur das Menü scrollt */
+    }
+
+    .sidebar .menu {
+        flex-grow: 1;
+        /* Lässt das Menü den verfügbaren Platz ausfüllen */
+        overflow-y: auto;
+        /* Stellt sicher, dass das Menü selbst scrollt */
+        padding-bottom: 1rem;
+        /* Optional, für Polsterung unten */
+    }
 }
 
-/* Menü */
+/* ================================
+            Menü
+================================ */
 .menu {
     display: flex;
     flex-direction: column;
@@ -401,10 +430,14 @@ footer {
     }
 }
 
+/* ================================
+        Liebesrechner Herz
+================================ */
+
 #heartCanvas {
     display: block;
     margin: 2rem auto;
-    background: #4d04192f;
+    background: #3803032f;
     border-radius: 20px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.603);
 }
@@ -418,7 +451,7 @@ footer {
 
 #heartCanvas {
     display: block;
-    background: #00000079;
+    background: #00000096;
     /* oder dein Verlauf/Farbe */
     border-radius: 20px;
 }
@@ -440,7 +473,7 @@ footer {
 .inside-form input {
     padding: .7rem .9rem;
     border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, .25);
+    border: 1px solid rgba(255, 0, 0, 0.89);
     background: rgba(11, 18, 32, .65);
     color: var(--text);
     outline: none;
@@ -491,7 +524,7 @@ footer {
     font-size: 64px;
     line-height: 1;
     color: #ff1e6a;
-    text-shadow: 0 0 20px rgba(255, 30, 106, .6);
+    text-shadow: 0 0 20px rgba(255, 35, 109, 0.616);
     animation: pulse 1.4s ease-in-out infinite;
     margin-bottom: .35rem;
 }
@@ -524,7 +557,9 @@ footer {
     cursor: pointer;
 }
 
-/* =========================================== Ladescreen ======================================== */
+/* ================================
+        Liebesrechner Ladescreen
+================================ */
 .loader.hidden {
     display: none;
 }
@@ -594,7 +629,7 @@ footer {
     width: 50px;
     height: 45px;
     position: relative;
-    background: #ff1e6a;
+    background: #ff1e69;
     transform: rotate(-45deg);
     animation: pulseHeart 0.8s infinite;
 }
@@ -605,7 +640,7 @@ footer {
     position: absolute;
     width: 50px;
     height: 45px;
-    background: #ff1e6a;
+    background: #fd1e68;
     border-radius: 50%;
 }
 
@@ -641,7 +676,128 @@ footer {
     }
 }
 
-/* ====================================================== Glücksrad ================================================== */
+/* ================================
+Liebesrechner Erde Mond Animation
+================================ */
+
+.space-anim {
+    position: relative;
+    width: 320px;
+    height: 130px;
+    margin: 0 auto 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 🌍 Erde */
+.earth-planet {
+    position: absolute;
+    left: 0;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-image: url("/assets/Images/Earth.jpg");
+    /* oder dein Pfad */
+    background-size: cover;
+    background-position: center;
+    background-color: transparent;
+    box-shadow: 0 0 18px rgba(0, 150, 255, 0.8);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+/* 🌕 Mond */
+.moon-planet {
+    position: absolute;
+    right: 0;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-image: url("assets/Images/Moon.png");
+    /* oder dein Pfad */
+    background-size: cover;
+    background-position: center;
+    background-color: transparent;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.7);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+/* gestrichelte Route */
+.space-anim::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 60px;
+    width: calc(100% - 120px);
+    border-top: 3px dashed rgba(255, 255, 255, 0.4);
+    transform: translateY(-50%);
+    animation: dashGlow 1.4s linear infinite alternate;
+}
+
+@keyframes dashGlow {
+    0% {
+        border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    100% {
+        border-color: rgba(255, 0, 127, 0.8);
+    }
+}
+
+/* ❤️ Herz fliegt hin und zurück */
+.orbit-heart {
+    position: absolute;
+    top: 50%;
+    left: 30px;
+    width: 22px;
+    height: 22px;
+    transform: translateY(-50%);
+    background: #ff007f;
+    border-radius: 50% 50% 0 50%;
+    rotate: -45deg;
+    box-shadow: 0 0 12px rgba(255, 0, 127, 0.9);
+    animation: orbitMove 3.2s ease-in-out infinite;
+}
+
+.orbit-heart::after {
+    content: "";
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    background: #ff007f;
+    border-radius: 50%;
+    top: 0;
+    left: 11px;
+}
+
+@keyframes orbitMove {
+    0% {
+        left: 50px;
+        transform: translateY(-50%) translateY(0) rotate(-45deg);
+    }
+
+    25% {
+        transform: translateY(-50%) translateY(-6px) rotate(-45deg);
+    }
+
+    50% {
+        left: calc(100% - 50px);
+        transform: translateY(-50%) translateY(0) rotate(-45deg);
+    }
+
+    75% {
+        transform: translateY(-50%) translateY(6px) rotate(-45deg);
+    }
+
+    100% {
+        left: 50px;
+        transform: translateY(-50%) translateY(0) rotate(-45deg);
+    }
+}
+
+/* ================================
+        Glücksrad
+================================ */
 .wheel-container {
     position: relative;
     display: flex;
@@ -684,7 +840,58 @@ footer {
     margin-left: -80px;
 }
 
-/* =================== Karteikarten-Spiel =================== */
+/* ================================
+        Glücksrad Popup
+================================ */
+.modal.hidden {
+    display: none;
+}
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    /* Hintergrunddunkelung */
+    display: grid;
+    place-items: center;
+    z-index: 1000;
+}
+
+.modal-card {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.modal-card h3 {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.modal-card p {
+    font-size: 1rem;
+    color: #555;
+}
+
+.close-btn {
+    margin-top: 1rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    background: #10a329;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    background: #12b13f;
+}
+
+/* ================================
+        Wer hat das gesagt
+================================ */
 .quiz-card {
     background: rgba(0, 0, 0, 0.25);
     border: 1px solid rgba(255, 255, 255, 0.05);
@@ -765,7 +972,9 @@ footer {
 }
 
 
-
+/* ================================
+        Unsere Songs
+================================ */
 
 .song-card {
     background: rgba(11, 18, 32, 0.4);
@@ -1018,7 +1227,9 @@ footer {
     }
 }
 
-/* ========================================================= Love Countdowns Panel ====================================================== */
+/* ================================
+        Countdown
+================================ */
 #panel-countdowns h2 {
     margin-bottom: .2rem;
 }
@@ -1110,7 +1321,9 @@ footer {
     }
 }
 
-/* ===== Tagesnachricht ===== */
+/* ================================
+        Daily Message
+================================ */
 .daily-message-bar {
     display: flex;
     gap: 1rem;
@@ -1156,7 +1369,9 @@ footer {
     line-height: 1.2;
 }
 
-/* ==================== Wahrheit oder Pflicht ==================== */
+/* ================================
+                WOP
+================================ */
 .wop-controls {
     display: flex;
     flex-wrap: wrap;
@@ -1257,7 +1472,9 @@ footer {
     /* falls Text zu lang ist, ... anzeigen */
 }
 
-/* ==================== Vollbild-Intro nach Login ==================== */
+/* ================================
+        Intro nach Login
+================================ */
 .intro-overlay {
     position: fixed;
     inset: 0;
@@ -1372,7 +1589,9 @@ footer {
     line-height: 1.25;
     color: #ff2c9a;
     opacity: 0;
-    /* NEU: standardmäßig unsichtbar */
+    /* Startwert - unsichtbar */
+    animation: fadeInIntro 2s ease-out forwards;
+    /* Animationsname + Dauer + Timing-Funktion */
 }
 
 
@@ -1389,7 +1608,7 @@ footer {
 @keyframes introFadeIn {
     from {
         opacity: 0;
-        transform: translateY(14px);
+        transform: translateY(20px);
     }
 
     to {
@@ -1482,129 +1701,15 @@ footer {
     }
 }
 
-
-.space-anim {
-    position: relative;
-    width: 320px;
-    height: 130px;
-    margin: 0 auto 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* 🌍 Erde */
-.earth-planet {
-    position: absolute;
-    left: 0;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background-image: url("Images/Earth.jpg");
-    /* oder dein Pfad */
-    background-size: cover;
-    background-position: center;
-    background-color: transparent;
-    box-shadow: 0 0 18px rgba(0, 150, 255, 0.8);
-    border: 2px solid rgba(255, 255, 255, 0.4);
-}
-
-/* 🌕 Mond */
-.moon-planet {
-    position: absolute;
-    right: 0;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background-image: url("Images/Moon.png");
-    /* oder dein Pfad */
-    background-size: cover;
-    background-position: center;
-    background-color: transparent;
-    box-shadow: 0 0 12px rgba(255, 255, 255, 0.7);
-    border: 2px solid rgba(255, 255, 255, 0.4);
-}
-
-/* gestrichelte Route */
-.space-anim::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 60px;
-    width: calc(100% - 120px);
-    border-top: 3px dashed rgba(255, 255, 255, 0.4);
-    transform: translateY(-50%);
-    animation: dashGlow 1.4s linear infinite alternate;
-}
-
-@keyframes dashGlow {
-    0% {
-        border-color: rgba(255, 255, 255, 0.4);
-    }
-
-    100% {
-        border-color: rgba(255, 0, 127, 0.8);
-    }
-}
-
-/* ❤️ Herz fliegt hin und zurück */
-.orbit-heart {
-    position: absolute;
-    top: 50%;
-    left: 30px;
-    width: 22px;
-    height: 22px;
-    transform: translateY(-50%);
-    background: #ff007f;
-    border-radius: 50% 50% 0 50%;
-    rotate: -45deg;
-    box-shadow: 0 0 12px rgba(255, 0, 127, 0.9);
-    animation: orbitMove 3.2s ease-in-out infinite;
-}
-
-.orbit-heart::after {
-    content: "";
-    position: absolute;
-    width: 22px;
-    height: 22px;
-    background: #ff007f;
-    border-radius: 50%;
-    top: 0;
-    left: 11px;
-}
-
-@keyframes orbitMove {
-    0% {
-        left: 50px;
-        transform: translateY(-50%) translateY(0) rotate(-45deg);
-    }
-
-    25% {
-        transform: translateY(-50%) translateY(-6px) rotate(-45deg);
-    }
-
-    50% {
-        left: calc(100% - 50px);
-        transform: translateY(-50%) translateY(0) rotate(-45deg);
-    }
-
-    75% {
-        transform: translateY(-50%) translateY(6px) rotate(-45deg);
-    }
-
-    100% {
-        left: 50px;
-        transform: translateY(-50%) translateY(0) rotate(-45deg);
-    }
-}
-
 /* Body darf nicht scrollen, wenn Intro offen ist */
 body.noscroll {
     overflow: hidden;
     height: 100dvh;
 }
 
-/* ==================== LOCKED KURZFILM-PANEL ==================== */
+/* ================================
+            Kurzfilm
+================================ */
 
 #panel-locked {
     max-width: 980px;
@@ -1735,7 +1840,9 @@ body.noscroll {
     }
 }
 
-/* ===== Passwort-Overlay für Kurzfilm ===== */
+/* ================================
+    Passwort für Kurzfilm
+================================ */
 
 .locked-overlay {
     position: absolute;
