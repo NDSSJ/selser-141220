@@ -3,7 +3,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const spinBtn = document.querySelector('.spin-btn');
     const resultDisplay = document.querySelector('.result');
 
-    // Hier kommt die Funktionalität für das Glücksrad
+    // Popup-Elemente
+    const resultPopup = document.getElementById('resultPopup');
+    const popupResult = document.getElementById('popupResult');
+    const closePopupBtn = document.querySelector('.close-btn');
+
+    // Glücksrad Funktion
     const wheel = new Winwheel({
         'numSegments': 8,
         'outerRadius': 200,
@@ -17,21 +22,36 @@ document.addEventListener('DOMContentLoaded', () => {
             'type': 'spinToStop',
             'duration': 5,
             'spins': 8
+        },
+        // Callback, wenn die Animation abgeschlossen ist
+        'animationComplete': function () {
+            showPopup(wheel.getIndicatedSegment().text); // Segmenttext abrufen
         }
     });
 
-    // Funktion für den Spin-Button
-    spinBtn.addEventListener('click', () => {
+    // Spin Button
+    document.querySelector('.spin-btn').addEventListener('click', () => {
         wheel.startAnimation();
     });
 
-    // Callback nach dem Drehen des Rads (zeigt das Ergebnis)
-    wheel.animation.callbackFinished = function () {
-        const segment = wheel.getIndicatedSegment();
-        resultDisplay.textContent = `Gewonnen: ${segment.text}`;
-    };
-});
+    // Funktion zum Anzeigen des Popups
+    function showPopup(prizeText) {
+        const popup = document.getElementById('resultPopup');
+        const popupResult = document.getElementById('popupResult');
+        popupResult.textContent = `You won: ${prizeText}`;  // Zeigt den gewonnenen Text an
 
+        // Popup einblenden mit Animation (zum Beispiel sanftes Hineingleiten)
+        popup.style.display = 'block';
+        popup.classList.add('show-popup'); // Popup mit Animation sichtbar machen
+
+        // Schließe das Popup nach 3 Sekunden
+        setTimeout(() => {
+            popup.style.display = 'none';
+            popup.classList.remove('show-popup');
+        }, 3000);
+    }
+
+});
 
 
 // ========================================================= Glücksrad ==========================================================
@@ -51,11 +71,11 @@ if (wheelCanvas) {
         "Kriegst ein Matcha 🥤",
         "Du wirst gekitzelt 😂",
         "Date dieses Wochenende 👩‍❤️‍👨",
-        "EIN ALTIN 🥇",
+        "EIN CEYREK 🥇",
         "Du schuldest mir was 😉",
         "Ich singe für dich 🎤",
         "Dummes Foto für Sticker 🤳",
-        "'Du hast Recht' Gutschein🎟️",
+        "Kraul Gutschein🎟️",
         "Pech, heute nichts 🐦‍⬛"
     ];
 
@@ -124,9 +144,9 @@ if (wheelCanvas) {
     // ---- Daily-Spin-Helper ----
     function alreadySpunToday() {
         const last = localStorage.getItem("wheelLastSpin");
-        if (!last) return false;
+        if (last) return false;
 
-        const today = new Date().toISOString().slice(0, 10); 
+        const today = new Date().toISOString().slice(0, 10);
         return last === today;
     }
 
@@ -171,11 +191,18 @@ if (wheelCanvas) {
                 const index = Math.floor(numSectors - (deg / arc)) % numSectors;
                 const prizeText = sectors[index];
 
-                // 2) Ergebnis anzeigen
+                // Text unter dem Rad
                 result.textContent = "→ " + prizeText;
 
-                // 3) merken, dass heute gedreht wurde
+                // POPUP öffnen
+                const resultPopup = document.getElementById("resultPopup");
+                const popupResult = document.getElementById("popupResult");
+                popupResult.textContent = prizeText;
+                resultPopup.classList.remove("hidden");
+
+                // Speichern, dass heute gedreht wurde
                 markSpunToday();
+
             }
         }
 
@@ -187,3 +214,8 @@ if (wheelCanvas) {
         spinBtn.addEventListener("click", spinWheel);
     }
 }
+
+// Popup schließen
+document.getElementById("closePopupBtn").addEventListener("click", () => {
+    document.getElementById("resultPopup").classList.add("hidden");
+});

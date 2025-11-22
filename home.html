@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SelSer</title>
-    <link rel="icon" type="image/png" href="Images/TabIcon.png">
+    <link rel="icon" type="image/png" href="assets/Images/TabIcon.png">
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
@@ -281,7 +281,18 @@
                     ChatGPT Chats nicht... Außerdem muss ich mir noch überlegen was ich dir zum Jahrestag schenken will.
                     Es wird wahrscheinlich nichts großes, ich möchte lieber Geld sparen momentan selis. Das ist für uns,
                     du weißt das. Mal schauen auf was für eine Idee ich komme.
-
+                </p>
+                ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                <p> <strong>(19.11.2025)</strong>
+                    Heute habe ich gute Fortschritte gemacht... für mich hahahah.
+                    <br> Ich hab den Code sortiert, der sieht jetzt viel übersichtlicher aus und ist besser damit zu
+                    arbeiten. Ich überlege ob ich die Bilder von der Slideshow lieber woanders lagern soll, weil das im
+                    Code zu umständlich ist und es kacke aussieht... Ich schau mal
+                    <br> Das ist voll schwer momentan nebenbei was mit dir zu Unternehmen, ich muss sagen als du in
+                    Istanbul warst hatte ich es richtig chillig HAHAHAHAH. Jetzt rufst du mehr an, fragst mehr was ich
+                    mache undso
+                    <br> Ich sitze seit ungelogen 4-5 std hier und versuche alles zu fixen was nicht klappt und es geht
+                    einfach nicht omg... Ich drehe durch irgendwann, alles was ich versuche klappt nicht
                 </p>
             </section>
 
@@ -748,11 +759,11 @@
                 </div>
             </section>
 
-            <!-- Pop-up für das Ergebnis -->
-            <div id="resultPopup" class="modal hidden">
-                <div class="modal-card">
-                    <h3>Ergebnis:</h3>
-                    <p id="resultText"></p>
+            <!-- Popup für Glücksrad-Ergebnis -->
+            <div id="resultPopup" class="popup-overlay hidden">
+                <div class="popup-box">
+                    <h3>Du hattest Glück... oder doch nicht? 🎉</h3>
+                    <p id="popupResult">–</p>
                     <button id="closePopupBtn" class="close-btn">Schließen</button>
                 </div>
             </div>
@@ -886,6 +897,13 @@
                         <h4>Keine Ahnung mehr</h4>
                         <p>Kannst ja gerne was vorschlagen</p>
                     </div>
+                </div>
+
+                <!-- Globaler Play/Pause-Button -->
+                <div class="play-toggle-row">
+                    <button id="togglePlay" class="song-toggle-btn" disabled>
+                        ▶ Start
+                    </button>
                 </div>
 
                 <!-- Lautstärke -->
