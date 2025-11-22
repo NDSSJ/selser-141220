@@ -1203,6 +1203,20 @@
                 <!-- Hintergrundmusik für den Kurzfilm -->
                 <audio id="lockedMusic" src="Music/Anlatamam.mp3"></audio>
 
+                <!-- Lautstärke nur für den Kurzfilm -->
+                <div class="locked-volume-row">
+                    <label for="lockedVolume">Lautstärke (Kurzfilm)</label>
+                    <input id="lockedVolume" type="range" min="0" max="1" step="0.01" value="0.5">
+                </div>
+
+                <!-- Timeline-Scroll-Fenster -->
+                <div class="locked-timeline-wrapper">
+                    <div id="lockedTimeline" class="locked-timeline"></div>
+                </div>
+
+
+
+
             </div>
 
         </main>

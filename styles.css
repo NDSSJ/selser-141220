@@ -1977,3 +1977,173 @@ body.noscroll {
 #lockedStartBtn.hidden {
     display: none !important;
 }
+
+/* Lautstärke-Regler nur für den Kurzfilm */
+.locked-volume-row {
+    margin-top: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    max-width: 400px;
+    margin-inline: auto;
+}
+
+.locked-volume-row label {
+    font-size: 0.9rem;
+    color: #e5e7eb;
+    letter-spacing: 0.5px;
+    user-select: none;
+}
+
+/* Slider-Stil wie bei den Songs */
+#lockedVolume {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 10px;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #ff1e6a, #10a329);
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 8px rgba(255, 30, 106, 0.3);
+}
+
+#lockedVolume:hover {
+    box-shadow: 0 0 15px rgba(255, 30, 106, 0.5);
+    transform: scaleY(1.1);
+}
+
+/* Chrome, Edge, Safari */
+#lockedVolume::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #ffffff, #ff1e6a 80%);
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(255, 30, 106, 0.6);
+    transition: all 0.2s ease;
+}
+
+#lockedVolume::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+    box-shadow: 0 0 15px rgba(255, 30, 106, 0.8);
+}
+
+/* Firefox */
+#lockedVolume::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: none;
+    background: radial-gradient(circle at 30% 30%, #ffffff, #ff1e6a 80%);
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(255, 30, 106, 0.6);
+    transition: all 0.2s ease;
+}
+
+#lockedVolume::-moz-range-thumb:hover {
+    transform: scale(1.15);
+}
+
+/* ================================
+   Kurzfilm Timeline – Scroll-Fenster
+================================ */
+.locked-timeline-wrapper {
+    width: 80%;
+    /* Breite des Fensters unter dem Film */
+    max-width: 900px;
+    height: 32px;
+    /* genug Platz für die Balken */
+    margin: 1rem auto 0;
+    /* zentriert unter dem Film */
+    overflow-x: auto;
+    /* horizontal scrollen */
+    overflow-y: hidden;
+    scrollbar-width: thin;
+    /* Firefox */
+    scrollbar-color: #ff1e6a #00000033;
+    border-radius: 12px;
+}
+
+/* Chrome / Edge / Safari Scrollbar */
+.locked-timeline-wrapper::-webkit-scrollbar {
+    height: 8px;
+}
+
+.locked-timeline-wrapper::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.locked-timeline-wrapper::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, #ff1e6a, #10a329);
+    border-radius: 10px;
+}
+
+/* ================================
+   Timeline-Leiste
+================================ */
+.locked-timeline {
+    display: flex;
+    gap: 6px;
+    padding: 6px 8px;
+    height: 20px;
+    width: max-content;
+    /* Breite = Summe aller Balken */
+}
+
+/* einzelne Balken */
+.locked-timeline-item {
+    flex: none;
+    /* nicht zusammenquetschen */
+    width: 28px;
+    /* Breite pro Szene */
+    height: 12px;
+    /* Höhe der Balken */
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.18);
+    opacity: 0.4;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition:
+        opacity 0.2s ease,
+        transform 0.15s ease,
+        background 0.2s ease;
+}
+
+/* "Füllung" für aktuelle Szene */
+.locked-timeline-item::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #ff1e6a, #ffb4c7);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.25s ease-out;
+}
+
+/* aktuelle Szene */
+.locked-timeline-item.active {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.28);
+    transform: translateY(-1px);
+}
+
+.locked-timeline-item.active::after {
+    transform: scaleX(1);
+}
+
+/* bereits vergangene Szenen */
+.locked-timeline-item.past {
+    opacity: 0.9;
+    background: rgba(16, 163, 41, 0.35);
+}
+
+.locked-timeline-item:hover {
+    transform: translateY(-2px);
+    opacity: 1;
+}
