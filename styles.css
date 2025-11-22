@@ -1523,9 +1523,30 @@ Liebesrechner Erde Mond Animation
     z-index: 4000;
     height: 100dvh;
     overflow: hidden;
+    opacity: 1;
+    transition: opacity 0.6s ease;
 }
 
-.intro-overlay.hidden {
+/* Intro Overlay – Fade In & Fade Out */
+#introOverlay {
+    opacity: 0;
+    /* startet unsichtbar */
+    transition: opacity 0.6s ease;
+    /* Dauer für Ein-/Ausblenden */
+}
+
+/* wird beim Laden gesetzt → Intro fährt rein */
+#introOverlay.intro-visible {
+    opacity: 1;
+}
+
+/* wird beim Beenden gesetzt → Intro fährt raus */
+#introOverlay.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#introOverlay.hidden {
     display: none;
 }
 
@@ -1771,18 +1792,19 @@ body.noscroll {
 }
 
 .locked-stage {
-    min-height: 620px;
+    min-height: 520px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 1.0rem;
+    margin-bottom: 10px !important;
 }
 
 /* Bild im Film */
 .locked-image {
     max-width: 100%;
-    max-height: 560px;
+    max-height: 420px;
     border-radius: 18px;
     object-fit: cover;
     box-shadow: 0 14px 38px rgba(0, 0, 0, 0.75);
@@ -1841,6 +1863,7 @@ body.noscroll {
     margin-top: 1.4rem;
     display: flex;
     justify-content: flex-end;
+
 }
 
 .locked-btn {
@@ -1977,6 +2000,16 @@ body.noscroll {
 #lockedStartBtn.hidden {
     display: none !important;
 }
+
+#lockedStopBtn {
+    background: rgba(255, 50, 80, 0.12);
+    border: 1px solid rgba(255, 80, 110, 0.35);
+}
+
+#lockedStopBtn:hover {
+    background: rgba(255, 60, 90, 0.22);
+}
+
 
 /* Lautstärke-Regler nur für den Kurzfilm */
 .locked-volume-row {

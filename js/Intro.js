@@ -2,6 +2,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const introOverlay = document.getElementById("introOverlay");
     if (!introOverlay) return; // auf index.html z.B. gibt es das nicht
 
+    // Intro sanft einblenden
+    requestAnimationFrame(() => {
+        introOverlay.classList.add("intro-visible");
+    });
+
+
     // NEU: Intro-Musik holen
     const introAudio = document.getElementById("introMusic");
 
@@ -69,16 +75,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function finishIntro() {
         if (timer) clearInterval(timer);
-        introOverlay.classList.add("hidden");
+
+        // ✨ 1. Fade-Out starten
+        introOverlay.classList.add("fade-out");
         document.body.classList.remove("noscroll");
         sessionStorage.removeItem("showIntro");
 
-        // NEU: Musik stoppen
+        // ✨ 2. Musik langsam ausfaden
         const introAudio = document.getElementById("introMusic");
         if (introAudio) {
             fadeOutAudio(introAudio, 1800);
         }
+
+        // ✨ 3. Nach dem Fade-Out wirklich entfernen
+        setTimeout(() => {
+            introOverlay.classList.add("hidden");
+            introOverlay.classList.remove("fade-out");
+        }, 600); // gleiche Zeit wie in CSS
     }
+
 
 
 
