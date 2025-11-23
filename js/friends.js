@@ -15,6 +15,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const outgoingList = document.getElementById("friendsOutgoingList");
     const friendsList = document.getElementById("friendsList");
 
+    const friendsConfirmBackdrop = document.getElementById("friendsConfirmBackdrop");
+    const friendsConfirmText = document.getElementById("friendsConfirmText");
+    const friendsConfirmOk = document.getElementById("friendsConfirmOk");
+    const friendsConfirmCancel = document.getElementById("friendsConfirmCancel");
+
+    // Welcher Eintrag soll gelöscht werden?
+    let pendingFriendshipId = null;
+
+
     if (!usernameInput || !saveUsernameBtn || !supabaseClient) {
         console.warn("Friends-Panel oder SupabaseClient nicht vorhanden.");
         return;
@@ -369,6 +378,54 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    function openRemoveFriendModal(friendshipId, friendUsername) {
+        pendingFriendshipId = friendshipId;
+        friendsConfirmText.textContent =
+            `Möchtest du @${friendUsername} wirklich aus deiner Freundesliste entfernen?`;
+        friendsConfirmBackdrop.style.display = "flex";
+    }
+
+    function closeRemoveFriendModal() {
+        pendingFriendshipId = null;
+        friendsConfirmBackdrop.style.display = "none";
+    }
+
+    async function confirmRemoveFriend() {
+        if (!pendingFriendshipId) {
+            closeRemoveFriendModal();
+            return;
+        }
+
+        try {
+            const { error } = await supabaseClient
+                .from("friendships")
+                .delete()
+                .eq("id", pendingFriendshipId);
+
+            if (error) {
+                console.error("Fehler beim Löschen der Freundschaft:", error);
+            }
+        } finally {
+            closeRemoveFriendModal();
+            await refreshAllLists();
+        }
+    }
+
+    // Buttons verdrahten
+    if (friendsConfirmOk && friendsConfirmCancel) {
+        friendsConfirmOk.addEventListener("click", confirmRemoveFriend);
+        friendsConfirmCancel.addEventListener("click", closeRemoveFriendModal);
+
+        // Klick außerhalb des Modals schließt es
+        friendsConfirmBackdrop.addEventListener("click", (e) => {
+            if (e.target === friendsConfirmBackdrop) {
+                closeRemoveFriendModal();
+            }
+        });
+    }
+
+
+    // ---- Freunde ----
     // ---- Freunde ----
     async function loadFriends() {
         if (!friendsList) return;
@@ -391,7 +448,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            // alle "anderen" IDs einsammeln
             const otherIds = data.map((row) =>
                 row.requester === user.id ? row.addressee : row.requester
             );
@@ -406,27 +462,26 @@ document.addEventListener("DOMContentLoaded", () => {
                 const div = document.createElement("div");
                 div.className = "friends-item";
                 div.innerHTML = `
-        <span>@${username}</span>
-        <button 
-          class="friends-remove-btn" 
-          data-id="${row.id}" 
-          data-username="${username}"
-        >
-          Entfernen
-        </button>
-    `;
+                    <span>@${username}</span>
+                    <button 
+                        class="friends-remove-btn"
+                        data-id="${row.id}"
+                        data-username="${username}"
+                    >
+                        Entfernen
+                    </button>
+                `;
                 friendsList.appendChild(div);
             });
 
-            // nach dem Rendern: Click-Handler für alle Entfernen-Buttons
+            // Klick auf "Entfernen" -> eigenes Modal
             friendsList.querySelectorAll(".friends-remove-btn").forEach((btn) => {
                 btn.addEventListener("click", () => {
                     const friendshipId = btn.dataset.id;
-                    const username = btn.dataset.username;
-                    removeFriend(friendshipId, username);
+                    const friendUsername = btn.dataset.username || "";
+                    openRemoveFriendModal(friendshipId, friendUsername);
                 });
             });
-
         } catch (err) {
             console.error(err);
             friendsList.innerHTML =

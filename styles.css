@@ -2750,3 +2750,69 @@ body.noscroll {
     transform: translateY(-1px);
     box-shadow: 0 0 10px rgba(255, 75, 75, 0.5);
 }
+
+/* --- Friends-Modal --- */
+.friends-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.friends-modal {
+    background: #050816;
+    border-radius: 18px;
+    padding: 24px 28px;
+    max-width: 420px;
+    width: 90%;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: #f9fafb;
+}
+
+.friends-modal h3 {
+    margin: 0 0 10px;
+    font-size: 1.2rem;
+}
+
+.friends-modal p {
+    margin: 0 0 18px;
+    font-size: 0.95rem;
+    color: #d1d5db;
+}
+
+.friends-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.friends-btn {
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.friends-btn.secondary {
+    background: #111827;
+    color: #e5e7eb;
+}
+
+.friends-btn.secondary:hover {
+    background: #1f2937;
+}
+
+.friends-btn.danger {
+    background: #ef4444;
+    color: #fff;
+}
+
+.friends-btn.danger:hover {
+    background: #dc2626;
+}
