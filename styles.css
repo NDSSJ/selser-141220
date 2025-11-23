@@ -699,7 +699,7 @@ Liebesrechner Erde Mond Animation
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background-image: url("/assets/Images/Earth.jpg");
+    background-image: url("/assets/Images/calc/Earth.jpg");
     /* oder dein Pfad */
     background-size: cover;
     background-position: center;
@@ -715,7 +715,7 @@ Liebesrechner Erde Mond Animation
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background-image: url("assets/Images/Moon.png");
+    background-image: url("assets/Images/calc/Moon.png");
     /* oder dein Pfad */
     background-size: cover;
     background-position: center;
@@ -2179,4 +2179,557 @@ body.noscroll {
 .locked-timeline-item:hover {
     transform: translateY(-2px);
     opacity: 1;
+}
+
+/* ================================
+   Minispiele – Auswahl
+================================ */
+
+.mini-subtitle {
+    color: rgba(229, 231, 235, .75);
+    margin-bottom: 1.5rem;
+}
+
+.mini-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 280px));
+    gap: 1.5rem;
+    align-items: stretch;
+}
+
+/* große Kacheln wie Song-Karten */
+.mini-card {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 1.3rem 1.4rem;
+    border-radius: 18px;
+    background: radial-gradient(circle at top, rgba(15, 23, 42, 0.95), #020617);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.6);
+    color: #f9fafb;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        border-color 0.15s ease,
+        background 0.2s ease;
+}
+
+.mini-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.7);
+    border-color: rgba(251, 113, 133, 0.9);
+    background: radial-gradient(circle at top, rgba(248, 113, 113, 0.18), #020617);
+}
+
+.mini-icon {
+    font-size: 1.6rem;
+}
+
+.mini-card h3 {
+    margin: 0;
+    font-size: 1.15rem;
+}
+
+.mini-card p {
+    margin: 0;
+    font-size: .9rem;
+    color: rgba(209, 213, 219, 0.9);
+}
+
+/* ================================
+   Minispiele – Spielfläche
+================================ */
+
+.hidden {
+    display: none !important;
+}
+
+.mini-game-area {
+    margin-top: 1.8rem;
+    background: radial-gradient(circle at top, rgba(15, 23, 42, 0.95), #020617);
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.8);
+    padding: 1.4rem 1.6rem 1.6rem;
+}
+
+.mini-game-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.mini-back-btn {
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.7);
+    background: rgba(15, 23, 42, 0.95);
+    color: #e5e7eb;
+    padding: .45rem 1rem;
+    font-size: .85rem;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.mini-back-btn:hover {
+    background: rgba(30, 64, 175, 0.95);
+    border-color: rgba(191, 219, 254, 0.9);
+}
+
+.mini-game-title {
+    font-weight: 600;
+    color: #e5e7eb;
+}
+
+/* Loader */
+.mini-loader {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .6rem;
+    color: #e5e7eb;
+}
+
+.mini-loader-spinner {
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    border: 3px solid rgba(148, 163, 184, 0.4);
+    border-top-color: #22c55e;
+    animation: mini-spin 0.7s linear infinite;
+}
+
+@keyframes mini-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Spielfeld-Zone */
+.mini-game-container {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ================================
+   Tic Tac Toe Board
+================================ */
+
+.ttt-board {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(90px, 110px));
+    gap: 10px;
+    padding: 1rem;
+    border-radius: 20px;
+    background: radial-gradient(circle at top, rgba(15, 23, 42, 0.95), #020617);
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.7);
+}
+
+.ttt-cell {
+    width: 100px;
+    height: 100px;
+    border-radius: 16px;
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(148, 163, 184, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: #e5e7eb;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease, border-color 0.15s ease;
+}
+
+.ttt-cell:hover {
+    background: rgba(30, 64, 175, 0.9);
+    transform: translateY(-2px);
+}
+
+.ttt-cell.ttt-x {
+    color: #fb7185;
+}
+
+.ttt-cell.ttt-o {
+    color: #38bdf8;
+}
+
+.ttt-status {
+    margin-top: 1rem;
+    text-align: center;
+    color: #e5e7eb;
+    font-size: .95rem;
+}
+
+/* ================================
+   Memory Board
+================================ */
+
+.memory-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.memory-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(70px, 90px));
+    gap: 10px;
+    padding: 1rem;
+    border-radius: 20px;
+    background: radial-gradient(circle at top, rgba(15, 23, 42, 0.95), #020617);
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.7);
+}
+
+.memory-card {
+    width: 80px;
+    height: 80px;
+    border-radius: 14px;
+    perspective: 800px;
+    /* nötig fürs 3D-Flipping */
+    cursor: pointer;
+}
+
+/* Innenleben der Karte (wird gedreht) */
+.memory-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease;
+}
+
+/* Vorder- und Rückseite */
+.memory-card-front,
+.memory-card-back {
+    position: absolute;
+    inset: 0;
+    border-radius: 14px;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Rückseite = Bildseite */
+.memory-card-back {
+    transform: rotateY(180deg);
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(148, 163, 184, 0.7);
+}
+
+/* Vorderseite = „Rückseite“ der Karte (verdeckt) */
+.memory-card-front {
+    background: linear-gradient(135deg, #0f172a, #1f2937);
+    border: 1px solid rgba(148, 163, 184, 0.5);
+}
+
+/* Wenn aufgedeckt oder gefunden → umdrehen */
+.memory-card.flipped .memory-card-inner,
+.memory-card.matched .memory-card-inner {
+    transform: rotateY(180deg);
+}
+
+/* Bild selbst */
+.memory-card-back img {
+    width: 70%;
+    height: 70%;
+    object-fit: contain;
+}
+
+/* Optional: matched etwas hervorheben */
+.memory-card.matched .memory-card-back {
+    border-color: rgba(22, 163, 74, 0.9);
+    box-shadow: 0 0 12px rgba(22, 163, 74, 0.7);
+}
+
+
+.memory-info {
+    color: #e5e7eb;
+    font-size: .9rem;
+    text-align: center;
+}
+
+/* Bild im Minispiel-Kachel */
+.mini-card img {
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 0.75rem;
+    object-fit: cover;
+}
+
+.mini-player-setup {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 260px;
+    text-align: center;
+}
+
+.mini-player-setup input {
+    padding: 0.6rem;
+    border-radius: 10px;
+    border: 1px solid rgba(148, 163, 184, 0.7);
+    background: rgba(15, 23, 42, 0.9);
+    color: white;
+}
+
+.mini-start-btn {
+    margin-top: 0.5rem;
+    padding: 0.6rem;
+    border-radius: 10px;
+    background: #22c55e;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.mini-start-btn:hover {
+    background: #16a34a;
+}
+
+.memory-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.memory-turn {
+    color: #e5e7eb;
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.mini-game-area {
+    margin-top: 1.8rem;
+    background: radial-gradient(circle at top, rgba(15, 23, 42, 0.95), #020617);
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.8);
+    padding: 1.4rem 1.6rem 1.6rem;
+    position: relative;
+    /* <- wichtig fürs Overlay */
+}
+
+/* Ergebnis-Overlay im Minigame-Bereich */
+.mini-result-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.98));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+}
+
+.mini-result-card {
+    background: rgba(15, 23, 42, 0.98);
+    border-radius: 18px;
+    border: 1px solid rgba(148, 163, 184, 0.8);
+    padding: 1.4rem 1.6rem;
+    text-align: center;
+    max-width: 340px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.9);
+}
+
+.mini-result-card h3 {
+    margin-top: 0;
+    margin-bottom: 0.6rem;
+    color: #e5e7eb;
+}
+
+.mini-result-card p {
+    margin: 0 0 1rem;
+    color: rgba(209, 213, 219, 0.95);
+}
+
+.mini-result-btn {
+    border-radius: 999px;
+    border: none;
+    padding: 0.55rem 1.4rem;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #001018;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 0 18px rgba(34, 197, 94, 0.55);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.mini-result-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 24px rgba(34, 197, 94, 0.8);
+}
+
+/* ==========================
+   Freunde-Panel
+========================== */
+
+.friends-subtitle {
+    color: rgba(229, 231, 235, 0.8);
+    margin-bottom: 1.5rem;
+}
+
+.friends-username-card {
+    background: radial-gradient(circle at top, rgba(15, 23, 42, 0.95), #020617);
+    border-radius: 18px;
+    padding: 1.2rem 1.4rem;
+    border: 1px solid rgba(148, 163, 184, 0.45);
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.7);
+    margin-bottom: 1.5rem;
+}
+
+.friends-username-card h3 {
+    margin-top: 0;
+    margin-bottom: 0.4rem;
+}
+
+.friends-username-info {
+    margin: 0 0 0.8rem;
+    font-size: 0.9rem;
+    color: rgba(209, 213, 219, 0.9);
+}
+
+.friends-username-row {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+}
+
+#friendsUsernameInput {
+    flex: 1;
+    padding: 0.6rem 0.75rem;
+    border-radius: 10px;
+    border: 1px solid rgba(148, 163, 184, 0.8);
+    background: rgba(15, 23, 42, 0.95);
+    color: #e5e7eb;
+}
+
+#friendsSaveUsernameBtn {
+    padding: 0.6rem 0.9rem;
+    border-radius: 10px;
+    border: none;
+    background: linear-gradient(135deg, #ec4899, #f97316);
+    color: #0b1020;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 0 12px rgba(248, 113, 113, 0.7);
+}
+
+/* Grid für Karten */
+.friends-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 320px));
+    gap: 1.4rem;
+}
+
+.friends-card {
+    background: radial-gradient(circle at top, rgba(15, 23, 42, 0.95), #020617);
+    border-radius: 18px;
+    padding: 1.1rem 1.3rem;
+    border: 1px solid rgba(148, 163, 184, 0.45);
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.7);
+}
+
+.friends-card h3 {
+    margin-top: 0;
+    margin-bottom: 0.4rem;
+}
+
+.friends-card p {
+    margin-top: 0;
+    margin-bottom: 0.8rem;
+    font-size: 0.9rem;
+    color: rgba(209, 213, 219, 0.9);
+}
+
+.friends-add-row {
+    display: flex;
+    gap: 0.6rem;
+}
+
+#friendsAddInput {
+    flex: 1;
+    padding: 0.55rem 0.75rem;
+    border-radius: 10px;
+    border: 1px solid rgba(148, 163, 184, 0.8);
+    background: rgba(15, 23, 42, 0.95);
+    color: #e5e7eb;
+}
+
+#friendsAddBtn {
+    padding: 0.55rem 0.9rem;
+    border-radius: 10px;
+    border: none;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #00151a;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.friends-status-msg {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.friends-status-msg.ok {
+    color: #4ade80;
+}
+
+.friends-status-msg.error {
+    color: #f97373;
+}
+
+.friends-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.friends-empty {
+    opacity: 0.75;
+}
+
+.friends-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.4rem 0.55rem;
+    border-radius: 10px;
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(148, 163, 184, 0.5);
+}
+
+.friends-actions {
+    display: flex;
+    gap: 0.35rem;
+}
+
+.friends-actions button {
+    border-radius: 999px;
+    border: none;
+    padding: 0.25rem 0.7rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.friends-actions button[data-action="accept"] {
+    background: #22c55e;
+    color: #001314;
+}
+
+.friends-actions button[data-action="decline"] {
+    background: #ef4444;
+    color: #fff;
 }

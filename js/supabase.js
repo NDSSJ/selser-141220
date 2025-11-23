@@ -6,6 +6,10 @@ const supabaseClient = typeof supabase !== "undefined"
     ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
     : null;
 
+// Für andere Scripts global verfügbar machen
+window.supabaseClient = supabaseClient;
+
+
 // ============== AUTH: SIGNUP ==============
 async function signUpWithEmailAndUsername(email, username, password) {
     if (!supabaseClient) throw new Error("Supabase nicht geladen");
