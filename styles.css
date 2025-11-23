@@ -2733,3 +2733,20 @@ body.noscroll {
     background: #ef4444;
     color: #fff;
 }
+
+.friends-remove-btn {
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.85rem;
+    background: #ff4b4b;
+    color: #fff;
+    transition: transform 0.1s ease, box-shadow 0.1s ease, opacity 0.1s ease;
+}
+
+.friends-remove-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    box-shadow: 0 0 10px rgba(255, 75, 75, 0.5);
+}

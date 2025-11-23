@@ -405,15 +405,64 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const div = document.createElement("div");
                 div.className = "friends-item";
-                div.innerHTML = `<span>@${username}</span>`;
+                div.innerHTML = `
+        <span>@${username}</span>
+        <button 
+          class="friends-remove-btn" 
+          data-id="${row.id}" 
+          data-username="${username}"
+        >
+          Entfernen
+        </button>
+    `;
                 friendsList.appendChild(div);
             });
+
+            // nach dem Rendern: Click-Handler für alle Entfernen-Buttons
+            friendsList.querySelectorAll(".friends-remove-btn").forEach((btn) => {
+                btn.addEventListener("click", () => {
+                    const friendshipId = btn.dataset.id;
+                    const username = btn.dataset.username;
+                    removeFriend(friendshipId, username);
+                });
+            });
+
         } catch (err) {
             console.error(err);
             friendsList.innerHTML =
                 "<p class='friends-empty'>Fehler beim Laden der Freunde.</p>";
         }
     }
+
+    async function removeFriend(friendshipId, username) {
+        const confirmDelete = window.confirm(
+            `Möchtest du @${username} wirklich aus deiner Freundesliste entfernen?`
+        );
+        if (!confirmDelete) return;
+
+        try {
+            // optional: currentUser holen, ist aber wegen RLS nicht zwingend
+            await getCurrentUser();
+
+            const { error } = await supabaseClient
+                .from("friendships")
+                .delete()
+                .eq("id", friendshipId);
+
+            if (error) {
+                console.error("Fehler beim Entfernen:", error);
+                alert("Freund konnte nicht entfernt werden. Versuch es später nochmal.");
+                return;
+            }
+
+            // Listen neu laden
+            await refreshAllLists();
+        } catch (err) {
+            console.error(err);
+            alert("Es ist ein Fehler aufgetreten.");
+        }
+    }
+
 
     // Initial
     loadOwnUsername();
