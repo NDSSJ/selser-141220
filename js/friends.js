@@ -93,7 +93,11 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        const username = raw.toLowerCase();
+        // NICHT mehr toLowerCase erzwingen
+        const username = raw;
+
+
+        const username = raw;
 
         try {
             const user = await getCurrentUser();
@@ -140,7 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // 2) Freundesanfrage senden
     // ============================
     async function sendFriendRequest() {
-        const targetName = addInput.value.trim().toLowerCase();
+        const targetName = addInput.value.trim();
         addStatus.textContent = "";
         addStatus.className = "friends-status-msg";
 
@@ -172,7 +176,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const { data: targetProfiles, error: tgtErr } = await supabaseClient
                 .from("profiles")
                 .select("id, username")
-                .eq("username", targetName)
+                .ilike("username", targetName)  // case-insensitive
                 .limit(1);
 
             if (tgtErr) throw tgtErr;
