@@ -20,6 +20,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const friendsConfirmOk = document.getElementById("friendsConfirmOk");
     const friendsConfirmCancel = document.getElementById("friendsConfirmCancel");
 
+    // --- User-Cache für schnelle Zugriffe ---
+    let cachedUser = null;
+
+    // Chat-Elemente
+    const chatPanel = document.getElementById("friendsChatPanel");
+    const chatTitle = document.getElementById("friendsChatTitle");
+    const chatMessages = document.getElementById("friendsChatMessages");
+    const chatInput = document.getElementById("friendsChatInput");
+    const chatSendBtn = document.getElementById("friendsChatSendBtn");
+
+    let currentChatFriendshipId = null;
+    let currentChatFriendName = null;
+
+
     // Welcher Eintrag soll gelöscht werden?
     let pendingFriendshipId = null;
 
@@ -33,13 +47,17 @@ document.addEventListener("DOMContentLoaded", () => {
     // Helper: aktueller User
     // ============================
     async function getCurrentUser() {
+        if (cachedUser) return cachedUser;
+
         const { data, error } = await supabaseClient.auth.getUser();
         if (error || !data?.user) {
             console.error("Kein eingeloggter User:", error);
             throw new Error("Du musst eingeloggt sein.");
         }
-        return data.user;
+        cachedUser = data.user;
+        return cachedUser;
     }
+
 
     async function getOrCreateProfile() {
         const user = await getCurrentUser();
@@ -463,18 +481,36 @@ document.addEventListener("DOMContentLoaded", () => {
                 div.className = "friends-item";
                 div.innerHTML = `
                     <span>@${username}</span>
-                    <button 
-                        class="friends-remove-btn"
-                        data-id="${row.id}"
-                        data-username="${username}"
-                    >
-                        Entfernen
-                    </button>
+                    <div class="friends-actions">
+                        <button
+                            class="friends-chat-btn"
+                            data-id="${row.id}"
+                            data-username="${username}"
+                        >
+                            Chat
+                        </button>
+                        <button
+                            class="friends-remove-btn"
+                            data-id="${row.id}"
+                            data-username="${username}"
+                        >
+                            Entfernen
+                        </button>
+                    </div>
                 `;
                 friendsList.appendChild(div);
             });
 
-            // Klick auf "Entfernen" -> eigenes Modal
+            // Chat-Buttons
+            friendsList.querySelectorAll(".friends-chat-btn").forEach((btn) => {
+                btn.addEventListener("click", () => {
+                    const friendshipId = btn.dataset.id;
+                    const friendUsername = btn.dataset.username || "";
+                    openChat(friendshipId, friendUsername);
+                });
+            });
+
+            // Entfernen-Buttons (nutzt dein bestehendes Modal)
             friendsList.querySelectorAll(".friends-remove-btn").forEach((btn) => {
                 btn.addEventListener("click", () => {
                     const friendshipId = btn.dataset.id;
@@ -488,6 +524,101 @@ document.addEventListener("DOMContentLoaded", () => {
                 "<p class='friends-empty'>Fehler beim Laden der Freunde.</p>";
         }
     }
+
+
+    // ============ CHAT ============
+
+    async function openChat(friendshipId, friendUsername) {
+        currentChatFriendshipId = friendshipId;
+        currentChatFriendName = friendUsername;
+
+        chatTitle.textContent = `Chat mit @${friendUsername}`;
+        chatInput.value = "";
+        chatInput.focus();
+
+        await loadMessages();
+    }
+
+    async function loadMessages() {
+        if (!currentChatFriendshipId) return;
+
+        const user = await getCurrentUser();
+
+        const { data, error } = await supabaseClient
+            .from("messages")
+            .select("id, sender, content, created_at")
+            .eq("friendship_id", currentChatFriendshipId)
+            .order("created_at", { ascending: true });
+
+        if (error) {
+            console.error("Fehler beim Laden der Nachrichten:", error);
+            chatMessages.innerHTML =
+                "<p class='friends-empty'>Fehler beim Laden des Chats.</p>";
+            return;
+        }
+
+        if (!data || data.length === 0) {
+            chatMessages.innerHTML =
+                "<p class='friends-empty'>Noch keine Nachrichten. Schreib als erstes! 😊</p>";
+            return;
+        }
+
+        chatMessages.innerHTML = "";
+        data.forEach((msg) => {
+            const isMe = msg.sender === user.id;
+            const div = document.createElement("div");
+            div.className = "friends-chat-message " + (isMe ? "me" : "them");
+
+            const time = new Date(msg.created_at).toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+            });
+
+            div.innerHTML = `
+                <div class="bubble">${msg.content}</div>
+                <span class="time">${time}</span>
+            `;
+            chatMessages.appendChild(div);
+        });
+
+        // nach unten scrollen
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    async function sendMessage() {
+        const text = chatInput.value.trim();
+        if (!text || !currentChatFriendshipId) return;
+
+        const user = await getCurrentUser();
+
+        const { error } = await supabaseClient
+            .from("messages")
+            .insert({
+                friendship_id: currentChatFriendshipId,
+                sender: user.id,
+                content: text,
+            });
+
+        if (error) {
+            console.error("Fehler beim Senden der Nachricht:", error);
+            return;
+        }
+
+        chatInput.value = "";
+        await loadMessages(); // simpel: neu laden nach dem Senden
+    }
+
+    if (chatSendBtn && chatInput) {
+        chatSendBtn.addEventListener("click", sendMessage);
+
+        chatInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+    }
+
 
     async function removeFriend(friendshipId, username) {
         const confirmDelete = window.confirm(

@@ -2816,3 +2816,147 @@ body.noscroll {
 .friends-btn.danger:hover {
     background: #dc2626;
 }
+
+/* --- Chat Panel --- */
+.friends-chat-panel {
+    margin-top: 24px;
+    background: radial-gradient(circle at top left, #111827 0, #020617 50%, #020616 100%);
+    border-radius: 22px;
+    padding: 18px 22px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.friends-chat-panel h3 {
+    margin: 0 0 10px;
+}
+
+/* Messages-Container */
+.friends-chat-messages {
+    max-height: 320px;
+    overflow-y: auto;
+    padding: 12px 10px;
+    border-radius: 16px;
+    background: rgba(15, 23, 42, 0.8);
+}
+
+/* einzelne Nachricht */
+.friends-chat-message {
+    display: flex;
+    flex-direction: column;
+    max-width: 70%;
+    margin-bottom: 8px;
+}
+
+.friends-chat-message.me {
+    margin-left: auto;
+    align-items: flex-end;
+}
+
+.friends-chat-message.them {
+    margin-right: auto;
+    align-items: flex-start;
+}
+
+.friends-chat-message .bubble {
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    line-height: 1.3;
+    word-break: break-word;
+}
+
+.friends-chat-message.me .bubble {
+    background: #22c55e;
+    color: #041016;
+}
+
+.friends-chat-message.them .bubble {
+    background: #111827;
+    color: #e5e7eb;
+}
+
+.friends-chat-message .time {
+    margin-top: 2px;
+    font-size: 0.7rem;
+    opacity: 0.7;
+}
+
+/* Inputbereich */
+.friends-chat-input {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+#friendsChatInput {
+    flex: 1;
+    padding: 8px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.6);
+    background: #020617;
+    color: #e5e7eb;
+    resize: none;
+    font-size: 0.9rem;
+}
+
+#friendsChatInput:focus {
+    outline: none;
+    border-color: #22c55e;
+}
+
+.friends-chat-send-btn {
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: none;
+    background: #22c55e;
+    color: #041016;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.05s ease, box-shadow 0.1s ease;
+}
+
+.friends-chat-send-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(34, 197, 94, 0.4);
+}
+
+/* Friends-Item Actions (Chat + Entfernen) */
+.friends-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.friends-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.friends-actions .friends-chat-btn,
+.friends-actions .friends-remove-btn {
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: none;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.friends-actions .friends-chat-btn {
+    background: #3b82f6;
+    color: white;
+}
+
+.friends-actions .friends-chat-btn:hover {
+    background: #2563eb;
+}
+
+.friends-actions .friends-remove-btn {
+    background: #ef4444;
+    color: white;
+}
+
+.friends-actions .friends-remove-btn:hover {
+    background: #dc2626;
+}
