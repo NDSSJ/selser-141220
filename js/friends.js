@@ -96,9 +96,6 @@ document.addEventListener("DOMContentLoaded", () => {
         // NICHT mehr toLowerCase erzwingen
         const username = raw;
 
-
-        const username = raw;
-
         try {
             const user = await getCurrentUser();
 
