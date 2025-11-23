@@ -525,7 +525,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-
     // ============ CHAT ============
 
     async function openChat(friendshipId, friendUsername) {

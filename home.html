@@ -1327,38 +1327,40 @@
                         </div>
                     </div>
                 </div>
-            </section>
 
-            <div id="friendsConfirmBackdrop" class="friends-modal-backdrop" style="display:none;">
-                <div class="friends-modal">
-                    <h3>Freund entfernen</h3>
-                    <p id="friendsConfirmText">
-                        Möchtest du diesen Freund wirklich aus deiner Freundesliste entfernen?
-                    </p>
-                    <div class="friends-modal-actions">
-                        <button id="friendsConfirmCancel" class="friends-btn secondary">Abbrechen</button>
-                        <button id="friendsConfirmOk" class="friends-btn danger">Ja, entfernen</button>
+                <div id="friendsConfirmBackdrop" class="friends-modal-backdrop" style="display:none;">
+                    <div class="friends-modal">
+                        <h3>Freund entfernen</h3>
+                        <p id="friendsConfirmText">
+                            Möchtest du diesen Freund wirklich aus deiner Freundesliste entfernen?
+                        </p>
+                        <div class="friends-modal-actions">
+                            <button id="friendsConfirmCancel" class="friends-btn secondary">Abbrechen</button>
+                            <button id="friendsConfirmOk" class="friends-btn danger">Ja, entfernen</button>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div id="friendsChatPanel" class="friends-chat-panel">
-                <h3 id="friendsChatTitle">Chat 💬</h3>
+                <div id="friendsChatPanel" class="friends-chat-panel">
+                    <h3 id="friendsChatTitle">Chat 💬</h3>
 
-                <div id="friendsChatMessages" class="friends-chat-messages">
-                    <p class="friends-empty">
-                        Wähle links einen Freund aus, um zu chatten.
-                    </p>
+                    <div id="friendsChatMessages" class="friends-chat-messages">
+                        <p class="friends-empty">
+                            Wähle links einen Freund aus, um zu chatten.
+                        </p>
+                    </div>
+
+                    <div class="friends-chat-input">
+                        <textarea id="friendsChatInput" rows="2"
+                            placeholder="Nachricht schreiben und Enter drücken …"></textarea>
+                        <button id="friendsChatSendBtn" class="friends-chat-send-btn">
+                            Senden
+                        </button>
+                    </div>
                 </div>
+            </section>
 
-                <div class="friends-chat-input">
-                    <textarea id="friendsChatInput" rows="2"
-                        placeholder="Nachricht schreiben und Enter drücken …"></textarea>
-                    <button id="friendsChatSendBtn" class="friends-chat-send-btn">
-                        Senden
-                    </button>
-                </div>
-            </div>
+
 
         </main>
 

@@ -2,11 +2,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const introOverlay = document.getElementById("introOverlay");
     if (!introOverlay) return; // auf index.html z.B. gibt es das nicht
 
+    // 🔹 NEU: nur zeigen, wenn Login das Flag gesetzt hat
+    const shouldShowIntro = sessionStorage.getItem("showIntro") === "true";
+    if (!shouldShowIntro) {
+        // Kein Intro gewünscht -> Overlay sofort verstecken und raus
+        introOverlay.classList.add("hidden");
+        document.body.classList.remove("noscroll");
+        return;
+    }
+
     // Intro sanft einblenden
     requestAnimationFrame(() => {
         introOverlay.classList.add("intro-visible");
     });
-
 
     // NEU: Intro-Musik holen
     const introAudio = document.getElementById("introMusic");
@@ -40,15 +48,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }, fadeInterval);
     }
 
-
     createHeartParticles();
 
     const introText = document.getElementById("introText");
     const introStartBtn = document.getElementById("introStartBtn");
 
-
     if (!introText || !introStartBtn) {
         introOverlay.classList.add("hidden");
+        document.body.classList.remove("noscroll");
         return;
     }
 
@@ -79,23 +86,22 @@ document.addEventListener("DOMContentLoaded", () => {
         // ✨ 1. Fade-Out starten
         introOverlay.classList.add("fade-out");
         document.body.classList.remove("noscroll");
+
+        // ✨ 2. Flag löschen, damit beim Reload KEIN Intro mehr kommt
         sessionStorage.removeItem("showIntro");
 
-        // ✨ 2. Musik langsam ausfaden
+        // ✨ 3. Musik langsam ausfaden
         const introAudio = document.getElementById("introMusic");
         if (introAudio) {
             fadeOutAudio(introAudio, 1800);
         }
 
-        // ✨ 3. Nach dem Fade-Out wirklich entfernen
+        // ✨ 4. Nach dem Fade-Out wirklich entfernen
         setTimeout(() => {
             introOverlay.classList.add("hidden");
             introOverlay.classList.remove("fade-out");
         }, 600); // gleiche Zeit wie in CSS
     }
-
-
-
 
     // Start-Button zuerst ausblenden
     introStartBtn.classList.remove("visible");
@@ -103,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ersten Satz anzeigen
     showSlide();
 
-    // alle 5 Sekunden zum nächsten Satz
+    // alle 4 Sekunden zum nächsten Satz
     timer = setInterval(() => {
         index++;
         if (index >= introSlides.length) {
@@ -113,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             showSlide();
         }
-    }, 4000); // 5 Sekunden
+    }, 4000);
 
     // „Los geht's“ schließt das Intro
     introStartBtn.addEventListener("click", finishIntro);
@@ -121,6 +127,4 @@ document.addEventListener("DOMContentLoaded", () => {
     if (introSkipBtn) {
         introSkipBtn.addEventListener("click", finishIntro);
     }
-
-
 });
