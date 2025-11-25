@@ -5,7 +5,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!grid || !stage) return;
 
-    // globale Spieler (werden beim Start über das Formular gesetzt)
+    // Map für Anzeigenamen
+    const GAME_NAMES = {
+        memory: "Memory",
+        tictactoe: "Tic Tac Toe",
+        connect4: "4 Gewinnt",
+    };
+
+    // globale Spieler-Namen
     window.currentPlayers = {
         p1: "",
         p2: "",
@@ -18,8 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
         card.addEventListener("click", () => {
             const game = card.dataset.game;
             if (!game) return;
-
-            // statt prompt: schönes Setup-Formular im Panel
             showPlayerSetup(game);
         });
     });
@@ -31,7 +36,8 @@ document.addEventListener("DOMContentLoaded", () => {
         grid.classList.add("hidden");
         stage.classList.remove("hidden");
 
-        const gameName = game === "memory" ? "Memory" : "Tic Tac Toe";
+        const normalized = (game || "").trim().toLowerCase();
+        const gameName = GAME_NAMES[normalized] || "Spiel";
 
         stage.innerHTML = `
             <div class="mini-game-topbar">
@@ -71,17 +77,32 @@ document.addEventListener("DOMContentLoaded", () => {
     // Spiel starten / zurück
     // ===========================
     function startGame(game) {
-        // Loader in den Stage-Bereich setzen
+        const normalized = (game || "").trim().toLowerCase();
+        const loaderName = GAME_NAMES[normalized] || "Spiel";
+
+        // Loader anzeigen
         stage.innerHTML = `
             <div class="mini-loader">
                 <div class="mini-loader-spinner"></div>
-                <p>Lade ${game === "memory" ? "Memory" : "Tic Tac Toe"}…</p>
+                <p>Lade ${loaderName}…</p>
             </div>
         `;
 
         setTimeout(() => {
-            if (game === "memory") loadMemory();
-            if (game === "tictactoe") loadTicTacToe();
+            switch (normalized) {
+                case "memory":
+                    loadMemory();
+                    break;
+                case "tictactoe":
+                    loadTicTacToe();
+                    break;
+                case "connect4":
+                    loadConnect4Game();
+                    break;
+                default:
+                    console.warn("Unbekanntes Spiel:", game);
+                    backToSelection();
+            }
         }, 600);
     }
 
@@ -132,7 +153,6 @@ document.addEventListener("DOMContentLoaded", () => {
     function loadMemory() {
         const container = renderTopBar("Memory");
 
-        // ---- HIER deine eigenen Bilder eintragen ----
         const images = [
             { id: "pic1", src: "assets/Images/minigames/pic1.jpg", alt: "Bild 1" },
             { id: "pic2", src: "assets/Images/minigames/pic2.png", alt: "Bild 2" },
@@ -143,45 +163,53 @@ document.addEventListener("DOMContentLoaded", () => {
             { id: "pic7", src: "assets/Images/minigames/pic7.png", alt: "Bild 7" },
             { id: "pic8", src: "assets/Images/minigames/pic8.jpg", alt: "Bild 8" },
         ];
-        // --------------------------------------------
 
-        // Doppeltes Deck erzeugen (jede Karte 2×)
         let deck = [...images, ...images];
         deck.sort(() => Math.random() - 0.5);
 
         const { p1, p2 } = window.currentPlayers || { p1: "Spieler 1", p2: "Spieler 2" };
-        let currentPlayer = "p1";
+
+        // 🔥 Random Start
+        let currentPlayer = Math.random() < 0.5 ? "p1" : "p2";
         let scoreP1 = 0;
         let scoreP2 = 0;
 
         container.innerHTML = `
-        <div class="memory-wrapper">
-            <div class="memory-header">
-                <div class="memory-info">Finde alle Paare!</div>
-                <div class="memory-turn" id="memoryTurn">Am Zug: ${p1}</div>
-            </div>
+            <div class="memory-wrapper">
+                <div class="memory-header">
+                    <div class="memory-info">Finde alle Paare!</div>
+                    <div class="memory-turn" id="memoryTurn">
+                        Am Zug: ${currentPlayer === "p1" ? p1 : p2}
+                    </div>
+                </div>
 
-            <div class="memory-grid">
-                ${deck
-                .map(
-                    (card, i) => `
-                    <div class="memory-card" data-index="${i}" data-id="${card.id}">
-                        <div class="memory-card-inner">
-                            <div class="memory-card-front"></div>
-                            <div class="memory-card-back">
-                                <img src="${card.src}" alt="${card.alt}">
-                            </div>
-                        </div>
-                    </div>`
-                )
-                .join("")}
+                <div class="memory-grid">
+                    ${deck
+                        .map(
+                            (card, i) => `
+                                <div class="memory-card" data-index="${i}" data-id="${card.id}">
+                                    <div class="memory-card-inner">
+                                        <div class="memory-card-front"></div>
+                                        <div class="memory-card-back">
+                                            <img src="${card.src}" alt="${card.alt}">
+                                        </div>
+                                    </div>
+                                </div>`
+                        )
+                        .join("")}
+                </div>
             </div>
-        </div>
-    `;
+            <div class="mini-restart-row">
+                <button class="mini-restart-btn">Neu starten</button>
+            </div>
+        `;
 
         const cards = container.querySelectorAll(".memory-card");
         const turnEl = container.querySelector("#memoryTurn");
         const infoEl = container.querySelector(".memory-info");
+        const restartBtn = container.querySelector(".mini-restart-btn");
+
+        restartBtn.addEventListener("click", loadMemory);
 
         function updateTurnLabel() {
             if (!turnEl) return;
@@ -210,7 +238,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 const i1 = first.dataset.index;
                 const i2 = second.dataset.index;
 
-                // WICHTIG: jetzt vergleichen wir über die id
                 if (deck[i1].id === deck[i2].id) {
                     first.classList.add("matched");
                     second.classList.add("matched");
@@ -254,7 +281,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-
     // ===========================
     // Tic Tac Toe
     // ===========================
@@ -266,18 +292,21 @@ document.addEventListener("DOMContentLoaded", () => {
         container.innerHTML = `
             <div class="ttt-board">
                 ${Array(9)
-                .fill(0)
-                .map((_, i) => `<div class="ttt-cell" data-i="${i}"></div>`)
-                .join("")}
+                    .fill(0)
+                    .map((_, i) => `<div class="ttt-cell" data-i="${i}"></div>`)
+                    .join("")}
             </div>
-            <div class="ttt-status">Am Zug: ${p1} (X)</div>
+            <div class="ttt-status"></div>
+            <div class="mini-restart-row">
+                <button class="mini-restart-btn">Neu starten</button>
+            </div>
         `;
 
         const cells = container.querySelectorAll(".ttt-cell");
         const status = container.querySelector(".ttt-status");
+        const restartBtn = container.querySelector(".mini-restart-btn");
 
         let board = Array(9).fill(null);
-        let playerSymbol = "X"; // X = p1, O = p2
         let gameOver = false;
 
         const wins = [
@@ -294,6 +323,14 @@ document.addEventListener("DOMContentLoaded", () => {
         function nameForSymbol(sym) {
             return sym === "X" ? p1 : p2;
         }
+
+        // 🔥 Zufällig X oder O fängt an
+        let playerSymbol = Math.random() < 0.5 ? "X" : "O";
+        if (status) {
+            status.textContent = `Am Zug: ${nameForSymbol(playerSymbol)} (${playerSymbol})`;
+        }
+
+        restartBtn.addEventListener("click", loadTicTacToe);
 
         function check(sym) {
             return wins.some(([a, b, c]) => board[a] === sym && board[b] === sym && board[c] === sym);
@@ -329,5 +366,120 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (status) status.textContent = `Am Zug: ${nextName} (${playerSymbol})`;
             });
         });
+    }
+
+    // ===========================
+    // 4 GEWINNT
+    // ===========================
+    function loadConnect4Game() {
+        const container = renderTopBar("4 Gewinnt");
+
+        const { p1, p2 } = window.currentPlayers || { p1: "Spieler 1", p2: "Spieler 2" };
+
+        container.innerHTML = `
+            <div class="c4-turn">
+                Am Zug: <span id="c4turnName"></span>
+            </div>
+            <div class="c4-board" id="c4board"></div>
+            <div class="mini-restart-row">
+                <button class="mini-restart-btn">Neu starten</button>
+            </div>
+        `;
+
+        const turnNameEl = container.querySelector("#c4turnName");
+        const boardDiv = container.querySelector("#c4board");
+        const restartBtn = container.querySelector(".mini-restart-btn");
+
+        const ROWS = 6;
+        const COLS = 7;
+        const board = Array.from({ length: ROWS }, () => Array(COLS).fill(null));
+
+        // 🔥 Zufällig, wer anfängt
+        let current = Math.random() < 0.5 ? "red" : "yellow";
+        if (turnNameEl) {
+            turnNameEl.textContent = current === "red" ? p1 : p2;
+        }
+
+        restartBtn.addEventListener("click", loadConnect4Game);
+
+        // Grid aufbauen
+        for (let r = 0; r < ROWS; r++) {
+            for (let c = 0; c < COLS; c++) {
+                const cell = document.createElement("div");
+                cell.className = "c4-cell";
+                cell.dataset.row = r;
+                cell.dataset.col = c;
+
+                cell.addEventListener("click", () => {
+                    placeDisc(c);
+                });
+
+                boardDiv.appendChild(cell);
+            }
+        }
+
+        function placeDisc(col) {
+            for (let row = ROWS - 1; row >= 0; row--) {
+                if (!board[row][col]) {
+                    board[row][col] = current;
+                    updateCell(row, col, current);
+
+                    if (checkWin(row, col)) {
+                        const winnerName = current === "red" ? p1 : p2;
+                        showResultPopup(`${winnerName} hat 4 Gewinnt gewonnen! 🎉`);
+                        return;
+                    }
+
+                    // Spieler wechseln
+                    if (current === "red") {
+                        current = "yellow";
+                        if (turnNameEl) turnNameEl.textContent = p2;
+                    } else {
+                        current = "red";
+                        if (turnNameEl) turnNameEl.textContent = p1;
+                    }
+                    return;
+                }
+            }
+        }
+
+        function updateCell(row, col, color) {
+            const index = row * COLS + col;
+            const cell = boardDiv.children[index];
+            cell.classList.add(color); // "red" oder "yellow"
+        }
+
+        function checkWin(row, col) {
+            const color = board[row][col];
+            if (!color) return false;
+
+            function countDir(dr, dc) {
+                let r = row + dr;
+                let c = col + dc;
+                let count = 0;
+
+                while (
+                    r >= 0 && r < ROWS &&
+                    c >= 0 && c < COLS &&
+                    board[r][c] === color
+                ) {
+                    count++;
+                    r += dr;
+                    c += dc;
+                }
+                return count;
+            }
+
+            function checkLine(dr, dc) {
+                return 1 + countDir(dr, dc) + countDir(-dr, -dc) >= 4;
+            }
+
+            return (
+                checkLine(1, 0) ||  // vertikal
+                checkLine(0, 1) ||  // horizontal
+                checkLine(1, 1) ||  // diagonal /
+                checkLine(1, -1)    // diagonal \
+            );
+        }
     }
 });

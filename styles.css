@@ -2570,6 +2570,99 @@ body.noscroll {
     box-shadow: 0 0 24px rgba(34, 197, 94, 0.8);
 }
 
+.mini-restart-row {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.mini-restart-btn {
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.7);
+    background: rgba(15, 23, 42, 0.95);
+    color: #e5e7eb;
+    padding: 0.45rem 1.2rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.mini-restart-btn:hover {
+    background: rgba(34, 197, 94, 0.9);
+    border-color: rgba(187, 247, 208, 0.9);
+    color: #022c22;
+}
+
+
+/* ==== 4 GEWINNT BOARD ==== */
+.c4-board {
+    display: grid;
+    grid-template-columns: repeat(7, 70px);
+    gap: 6px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.c4-cell {
+    width: 70px;
+    height: 70px;
+    background: #0b1220;
+    border: 3px solid #1e2a43;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.c4-cell.red {
+    background: #d62828;
+}
+
+.c4-cell.yellow {
+    background: #fcbf49;
+}
+
+/* Hover-Highlight */
+.c4-cell:hover {
+    filter: brightness(1.2);
+}
+
+/* Spieleranzeige */
+.c4-turn {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 1.2rem;
+}
+
+/* Popup */
+.c4-popup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+}
+
+.c4-popup {
+    background: #111a2c;
+    padding: 25px 35px;
+    border-radius: 14px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, .4);
+}
+
+.c4-popup button {
+    margin-top: 15px;
+    padding: 8px 18px;
+    background: #0ea7ff;
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+
 /* ==========================
    Freunde-Panel
 ========================== */
