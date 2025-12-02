@@ -500,6 +500,13 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         activeGameChannel = channel;
 
+        // Wenn der andere das Spiel verlässt
+        channel.on("broadcast", { event: "game-left" }, () => {
+            // Wir bleiben im Channel, zeigen nur Popup + zurück
+            showOpponentLeftPopup();
+        });
+
+
         // Loader kurz anzeigen (optional)
         const loaderName = GAME_NAMES[activeGameKey] || "Spiel";
         stage.innerHTML = `
@@ -540,6 +547,16 @@ document.addEventListener("DOMContentLoaded", () => {
     function backToSelection() {
         // Online-Channel schließen, wenn vorhanden
         if (activeGameChannel) {
+            try {
+                activeGameChannel.send({
+                    type: "broadcast",
+                    event: "game-left",
+                    payload: {}
+                });
+            } catch (e) {
+                console.error("Fehler beim Senden von game-left:", e);
+            }
+
             activeGameChannel.unsubscribe();
             activeGameChannel = null;
             activeGameRole = null;
@@ -585,6 +602,26 @@ document.addEventListener("DOMContentLoaded", () => {
             overlay.remove();
         });
     }
+
+    function showOpponentLeftPopup() {
+        const overlay = document.createElement("div");
+        overlay.className = "mini-result-overlay";
+        overlay.innerHTML = `
+        <div class="mini-result-card">
+            <h3>Spiel beendet 🚪</h3>
+            <p>Dein Mitspieler hat das Spiel verlassen. Die Lobby wird geschlossen.</p>
+            <button class="mini-result-btn">Okay</button>
+        </div>
+    `;
+
+        stage.appendChild(overlay);
+
+        overlay.querySelector(".mini-result-btn").addEventListener("click", () => {
+            overlay.remove();
+            backToSelection();
+        });
+    }
+
 
     // ===========================
     // Memory
@@ -1459,4 +1496,20 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     }
+
+    window.addEventListener("beforeunload", () => {
+        if (activeGameChannel) {
+            try {
+                activeGameChannel.send({
+                    type: "broadcast",
+                    event: "game-left",
+                    payload: {}
+                });
+                activeGameChannel.unsubscribe();
+            } catch (e) {
+                console.error("Fehler beim beforeunload game-left:", e);
+            }
+        }
+    });
+
 });
