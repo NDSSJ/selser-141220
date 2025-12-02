@@ -596,7 +596,7 @@ document.addEventListener("DOMContentLoaded", () => {
             { id: "pic1", src: "assets/Images/minigames/pic1.jpg", alt: "Bild 1" },
             { id: "pic2", src: "assets/Images/minigames/pic2.PNG", alt: "Bild 2" },
             { id: "pic3", src: "assets/Images/minigames/pic3.jpg", alt: "Bild 3" },
-            { id: "pic4", src: "assets/Images/minigames/pic4.jpeg", alt: "Bild 4" },
+            { id: "pic4", src: "assets/Images/minigames/pic4.JPEG", alt: "Bild 4" },
             { id: "pic5", src: "assets/Images/minigames/pic5.PNG", alt: "Bild 5" },
             { id: "pic6", src: "assets/Images/minigames/pic6.PNG", alt: "Bild 6" },
             { id: "pic7", src: "assets/Images/minigames/pic7.png", alt: "Bild 7" },
@@ -725,11 +725,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const images = [
             { id: "pic1", src: "assets/Images/minigames/pic1.jpg", alt: "Bild 1" },
-            { id: "pic2", src: "assets/Images/minigames/pic2.png", alt: "Bild 2" },
+            { id: "pic2", src: "assets/Images/minigames/pic2.PNG", alt: "Bild 2" },
             { id: "pic3", src: "assets/Images/minigames/pic3.jpg", alt: "Bild 3" },
-            { id: "pic4", src: "assets/Images/minigames/pic4.jpeg", alt: "Bild 4" },
-            { id: "pic5", src: "assets/Images/minigames/pic5.png", alt: "Bild 5" },
-            { id: "pic6", src: "assets/Images/minigames/pic6.png", alt: "Bild 6" },
+            { id: "pic4", src: "assets/Images/minigames/pic4.JPEG", alt: "Bild 4" },
+            { id: "pic5", src: "assets/Images/minigames/pic5.PNG", alt: "Bild 5" },
+            { id: "pic6", src: "assets/Images/minigames/pic6.PNG", alt: "Bild 6" },
             { id: "pic7", src: "assets/Images/minigames/pic7.png", alt: "Bild 7" },
             { id: "pic8", src: "assets/Images/minigames/pic8.jpg", alt: "Bild 8" },
         ];
@@ -916,8 +916,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     }
-
-
 
     // ===========================
     // Tic Tac Toe
