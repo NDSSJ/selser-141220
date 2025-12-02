@@ -594,11 +594,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const images = [
             { id: "pic1", src: "assets/Images/minigames/pic1.jpg", alt: "Bild 1" },
-            { id: "pic2", src: "assets/Images/minigames/pic2.png", alt: "Bild 2" },
+            { id: "pic2", src: "assets/Images/minigames/pic2.PNG", alt: "Bild 2" },
             { id: "pic3", src: "assets/Images/minigames/pic3.jpg", alt: "Bild 3" },
             { id: "pic4", src: "assets/Images/minigames/pic4.jpeg", alt: "Bild 4" },
-            { id: "pic5", src: "assets/Images/minigames/pic5.png", alt: "Bild 5" },
-            { id: "pic6", src: "assets/Images/minigames/pic6.png", alt: "Bild 6" },
+            { id: "pic5", src: "assets/Images/minigames/pic5.PNG", alt: "Bild 5" },
+            { id: "pic6", src: "assets/Images/minigames/pic6.PNG", alt: "Bild 6" },
             { id: "pic7", src: "assets/Images/minigames/pic7.png", alt: "Bild 7" },
             { id: "pic8", src: "assets/Images/minigames/pic8.jpg", alt: "Bild 8" },
         ];
@@ -734,54 +734,70 @@ document.addEventListener("DOMContentLoaded", () => {
             { id: "pic8", src: "assets/Images/minigames/pic8.jpg", alt: "Bild 8" },
         ];
 
-        // Deck global synchronisieren →
-        // Host mischt und broadcastet Deck
+        const { p1, p2 } = window.currentPlayers || { p1: "Spieler 1", p2: "Spieler 2" };
+
+        // Gemeinsames Deck für beide Clients
         let deck = [];
 
-        if (role === "host") {
-            deck = [...images, ...images].sort(() => Math.random() - 0.5);
-
-            channel.send({
-                type: "broadcast",
-                event: "memory-init",
-                payload: { deck }
-            });
-        }
-
-        channel.on("broadcast", { event: "memory-init" }, (event) => {
-            deck = event.payload.deck;
-            renderBoard();
-        });
-
-        // Punkte
-        const { p1, p2 } = window.currentPlayers;
+        // Punkte & Zug
         let scoreP1 = 0;
         let scoreP2 = 0;
 
-        let currentPlayer = "p1"; // Host beginnt
-        if (role === "guest") currentPlayer = "p2";
+        // ❗ WICHTIG: Beide Clients starten mit dem gleichen currentPlayer
+        let currentPlayer = "p1"; // p1 beginnt IMMER
 
         let selected = [];
         let locked = false;
+
+        // --- Deck-Initialisierung ---
+
+        // Handler zuerst registrieren
+        channel.on("broadcast", { event: "memory-init" }, (event) => {
+            deck = event.payload.deck;
+            scoreP1 = 0;
+            scoreP2 = 0;
+            currentPlayer = "p1";   // Reset: immer p1 startet
+            selected = [];
+            locked = false;
+            renderBoard();
+        });
+
+        // Nur Host erstellt das Deck und sendet es
+        if (role === "host") {
+            const initialDeck = [...images, ...images].sort(() => Math.random() - 0.5);
+            channel.send({
+                type: "broadcast",
+                event: "memory-init",
+                payload: { deck: initialDeck }
+            });
+        }
+
+        // --- UI rendern ---
 
         function renderBoard() {
             container.innerHTML = `
             <div class="memory-wrapper">
                 <div class="memory-header">
-                    <div>Finde alle Paare!</div>
-                    <div class="memory-turn">Am Zug: ${currentPlayer === "p1" ? p1 : p2}</div>
+                    <div class="memory-info">Finde alle Paare!</div>
+                    <div class="memory-turn">
+                        Am Zug: ${currentPlayer === "p1" ? p1 : p2}
+                    </div>
                 </div>
 
                 <div class="memory-grid">
-                    ${deck.map((card, i) => `
-                        <div class="memory-card" data-i="${i}">
-                            <div class="memory-card-inner">
-                                <div class="memory-card-front"></div>
-                                <div class="memory-card-back">
-                                    <img src="${card.src}">
+                    ${deck
+                    .map(
+                        (card, i) => `
+                            <div class="memory-card" data-i="${i}">
+                                <div class="memory-card-inner">
+                                    <div class="memory-card-front"></div>
+                                    <div class="memory-card-back">
+                                        <img src="${card.src}" alt="${card.alt}">
+                                    </div>
                                 </div>
-                            </div>
-                        </div>`).join("")}
+                            </div>`
+                    )
+                    .join("")}
                 </div>
             </div>
             <div class="mini-restart-row">
@@ -791,8 +807,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const restart = container.querySelector(".mini-restart-btn");
             restart.addEventListener("click", () => {
+                // Nur Host darf Neustart triggern
                 if (role === "host") {
-                    // neues Deck senden
                     const newDeck = [...images, ...images].sort(() => Math.random() - 0.5);
                     channel.send({
                         type: "broadcast",
@@ -805,85 +821,102 @@ document.addEventListener("DOMContentLoaded", () => {
             connectClicks();
         }
 
+        function updateTurnLabel() {
+            const turnEl = container.querySelector(".memory-turn");
+            if (turnEl) {
+                turnEl.textContent = `Am Zug: ${currentPlayer === "p1" ? p1 : p2}`;
+            }
+        }
+
+        // --- Klick-Logik ---
+
         function connectClicks() {
             container.querySelectorAll(".memory-card").forEach(card => {
                 card.addEventListener("click", () => {
-                    const i = Number(card.dataset.i);
+                    const index = Number(card.dataset.i);
 
-                    // Nur am Zug Spieler darf klicken
-                    const imMyTurn =
+                    // Nur der Spieler am Zug darf Broadcast senden
+                    const isMyTurn =
                         (role === "host" && currentPlayer === "p1") ||
                         (role === "guest" && currentPlayer === "p2");
 
-                    if (!imMyTurn || locked) return;
+                    if (!isMyTurn || locked) return;
 
                     channel.send({
                         type: "broadcast",
                         event: "memory-click",
-                        payload: { index: i, player: currentPlayer }
+                        payload: { index }
                     });
                 });
             });
         }
 
-        // Broadcast Moves empfangen
+        // Broadcasts für Züge empfangen
         channel.on("broadcast", { event: "memory-click" }, (event) => {
-            const { index, player } = event.payload;
-            handleClick(index, player);
+            const { index } = event.payload || {};
+            if (index === undefined) return;
+            handleClick(index);
         });
 
-        function handleClick(i, player) {
-            const memoryCards = container.querySelectorAll(".memory-card");
-            const card = memoryCards[i];
-
-            if (!card || card.classList.contains("matched") || locked) return;
+        function handleClick(i) {
+            const cards = container.querySelectorAll(".memory-card");
+            const card = cards[i];
+            if (!card || locked || card.classList.contains("matched") || card.classList.contains("flipped")) {
+                return;
+            }
 
             card.classList.add("flipped");
             selected.push({ i, id: deck[i].id });
 
-            if (selected.length === 2) {
-                locked = true;
+            if (selected.length < 2) return;
 
-                const [a, b] = selected;
+            // Zweite Karte → prüfen
+            locked = true;
+            const [a, b] = selected;
 
-                if (a.id === b.id) {
-                    // Match
-                    memoryCards[a.i].classList.add("matched");
-                    memoryCards[b.i].classList.add("matched");
+            if (a.id === b.id) {
+                // Match
+                cards[a.i].classList.add("matched");
+                cards[b.i].classList.add("matched");
 
-                    if (player === "p1") scoreP1++;
-                    else scoreP2++;
+                if (currentPlayer === "p1") {
+                    scoreP1++;
+                } else {
+                    scoreP2++;
+                }
 
+                selected = [];
+                locked = false;
+
+                // Alle Paare gefunden?
+                const totalPairs = images.length;
+                if (scoreP1 + scoreP2 === totalPairs) {
+                    let msg;
+                    if (scoreP1 > scoreP2) {
+                        msg = `${p1} hat gewonnen! (${scoreP1} : ${scoreP2}) 🎉`;
+                    } else if (scoreP2 > scoreP1) {
+                        msg = `${p2} hat gewonnen! (${scoreP2} : ${scoreP1}) 🎉`;
+                    } else {
+                        msg = `Unentschieden! Beide haben ${scoreP1} Paare. 🤝`;
+                    }
+                    showResultPopup(msg);
+                }
+            } else {
+                // Kein Match → nach kurzer Zeit umdrehen und Zug wechseln
+                setTimeout(() => {
+                    cards[a.i].classList.remove("flipped");
+                    cards[b.i].classList.remove("flipped");
                     selected = [];
                     locked = false;
 
-                    // Spiel vorbei?
-                    const total = images.length;
-                    if (scoreP1 + scoreP2 === total) {
-                        const winner =
-                            scoreP1 > scoreP2 ? p1 :
-                                scoreP2 > scoreP1 ? p2 :
-                                    "Unentschieden";
-
-                        showResultPopup(`${winner} hat gewonnen!`);
-                    }
-                } else {
-                    // Kein Match → zurückdrehen
-                    setTimeout(() => {
-                        memoryCards[a.i].classList.remove("flipped");
-                        memoryCards[b.i].classList.remove("flipped");
-                        selected = [];
-                        locked = false;
-
-                        // Spieler wechseln
-                        currentPlayer = currentPlayer === "p1" ? "p2" : "p1";
-                        container.querySelector(".memory-turn").textContent =
-                            `Am Zug: ${currentPlayer === "p1" ? p1 : p2}`;
-                    }, 900);
-                }
+                    // Zugwechsel (bei BEIDEN Clients gleich)
+                    currentPlayer = currentPlayer === "p1" ? "p2" : "p1";
+                    updateTurnLabel();
+                }, 900);
             }
         }
     }
+
 
 
     // ===========================
