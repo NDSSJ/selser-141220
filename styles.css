@@ -3103,3 +3103,170 @@ body.noscroll {
 .friends-actions .friends-remove-btn:hover {
     background: #dc2626;
 }
+
+/* ======================= ADVENTSKALENDER ======================= */
+
+#adventGrid {
+    margin-top: 1.8rem;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(90px, 120px));
+    /* 6 Spalten */
+    gap: 1.6rem;
+    /* Abstand zwischen den Türchen */
+    justify-content: center;
+}
+
+/* einzelne Türchen (Button) */
+.advent-door {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    /* quadratisch */
+    border: none;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+    perspective: 900px;
+    /* für 3D-Flip */
+}
+
+/* Innenleben für den Flip */
+.advent-door-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease;
+}
+
+/* Vorder- und Rückseite */
+.advent-face {
+    position: absolute;
+    inset: 0;
+    border-radius: 18px;
+    overflow: hidden;
+    backface-visibility: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+}
+
+/* Bilder füllen komplett die Fläche */
+.advent-face img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Vorderseite zeigt nach vorne */
+.advent-front {
+    transform: rotateY(0deg);
+}
+
+/* Rückseite ist die „Innen“-Seite */
+.advent-inside {
+    transform: rotateY(180deg);
+}
+
+/* Zahl im Türchen (auf der Vorderseite) */
+.advent-day-label {
+    position: absolute;
+    bottom: 8px;
+    right: 10px;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 0 7px rgba(0, 0, 0, 0.85);
+}
+
+/* Wenn geöffnet → Flip um 180° */
+.advent-door.open .advent-door-inner {
+    transform: rotateY(180deg);
+}
+
+/* Optional: geöffnete Türchen leicht markieren */
+.advent-door.open .advent-inside {
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6);
+}
+
+/* ===== Advent: gesperrtes Türchen Popup ===== */
+.advent-locked-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2500;
+}
+
+.advent-locked-card {
+    background: linear-gradient(135deg, #111827, #1f2937);
+    border-radius: 18px;
+    padding: 1.6rem 2rem 1.4rem;
+    max-width: 360px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+    position: relative;
+    overflow: hidden;
+}
+
+.advent-locked-card h3 {
+    margin: 0.2rem 0 0.6rem;
+    font-size: 1.3rem;
+}
+
+.advent-locked-card p {
+    margin: 0 0 1.1rem;
+    font-size: 0.98rem;
+}
+
+.advent-locked-close {
+    background: #fbbf24;
+    color: #111827;
+    border: none;
+    padding: 0.45rem 1.3rem;
+    border-radius: 999px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
+}
+
+.advent-locked-close:hover {
+    background: #facc15;
+    transform: translateY(-1px);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.45);
+}
+
+/* Weihnachtsmann-Animation */
+.advent-santa-box {
+    width: 180px;
+    height: 110px;
+    margin: 0 auto 0.6rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.advent-santa-box img {
+    position: absolute;
+    top: 10px;
+    left: -40%;
+    height: 90px;
+    animation: santaWalk 3s linear infinite;
+}
+
+.advent-santa-box img {
+    transform: scaleX(-1);
+    /* horizontal spiegeln */
+}
+
+
+@keyframes santaWalk {
+    0% {
+        left: -40%;
+    }
+
+    100% {
+        left: 110%;
+    }
+}

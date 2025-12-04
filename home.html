@@ -125,10 +125,13 @@
                     <i class="fa-solid fa-user-group"></i><span>Freunde</span>
                 </button>
 
+                <button class="menu-item" data-target="panel-advent">
+                    <i class="fa-solid fa-snowflake"></i><span>Adventskalender</span>
+                </button>
+
                 <button onclick="supabaseLogout()" class="menu-item">
                     <i class="fa-solid fa-right-from-bracket"></i><span>Logout</span>
                 </button>
-
 
             </nav>
         </aside>
@@ -1382,6 +1385,25 @@
                 </div>
             </section>
 
+            <section id="panel-advent" class="panel">
+                <h2>🎄 Adventskalender 2025</h2>
+                <p class="mini-subtitle">Jeden Tag ein Türchen – erst ab dem jeweiligen Datum öffnbar ✨</p>
+
+                <div id="adventGrid" class="advent-grid"></div>
+            </section>
+
+            <!-- Advent-Popup für gesperrte Türchen -->
+            <div id="adventLockedOverlay" class="advent-locked-overlay hidden">
+                <div class="advent-locked-card">
+                    <div class="advent-santa-box">
+                        <img src="assets/Images/advent/santa-walk.gif" alt="Weihnachtsmann" />
+                    </div>
+                    <h3>Ho ho ho sabırsız🎅</h3>
+                    <p id="adventLockedText">Es ist noch nicht der richtige Tag.</p>
+                    <button id="adventLockedClose" class="advent-locked-close">Okay</button>
+                </div>
+            </div>
+
 
 
         </main>
@@ -1406,6 +1428,8 @@
     <script src="js/Intro.js"></script>
     <script src="js/friends.js"></script>
     <script src="js/games.js"></script>
+    <script src="js/advent.js"></script>
+
 
 
 
