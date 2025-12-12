@@ -12,10 +12,15 @@ async function loadDailyMessages() {
     textEl.textContent = "Lade ...";
     if (metaEl) metaEl.textContent = "";
 
+    // heutigess Datum als string "YYYY-MM-DD"
+    const todayStr = new Date().toISOString().slice(0, 10);
+
     const { data, error } = await supabaseClient
         .from("daily_messages")
         .select("id, message, date_for")
-        .order("date_for", { ascending: false });
+        .eq("date_for", todayStr)
+        .limit(1);
+
 
     if (error) {
         console.error(error);
@@ -24,35 +29,28 @@ async function loadDailyMessages() {
         return;
     }
 
-    if (!data || data.length === 0) {
-        selectEl.innerHTML = `<option>Keine Nachrichten vorhanden</option>`;
-        textEl.textContent = "Noch keine Nachricht hinterlegt 🙂";
+    if (error) {
+        console.error(error);
+        textEl.textContent = "Konnte nichts laden.";
+        if (metaEl) metaEl.textContent = "";
         return;
     }
 
-    // heutigess Datum als string "YYYY-MM-DD"
-    const todayStr = new Date().toISOString().slice(0, 10);
+    const row = data && data.length ? data[0] : null;
 
-    // Optionen bauen
-    data.forEach((row) => {
-        const opt = document.createElement("option");
-        opt.value = row.id;
-        opt.textContent = row.date_for; // z.B. 2025-12-15
-        selectEl.appendChild(opt);
-    });
+    // Optional: Select deaktivieren (falls noch sichtbar)
+    selectEl.innerHTML = "";
+    selectEl.disabled = true;
 
-    // versuchen: Eintrag für heute finden
-    const todaysMsg = data.find((row) => row.date_for === todayStr);
+    if (!row) {
+        textEl.textContent = "Heute gibt es noch keine Nachricht 🙂";
+        if (metaEl) metaEl.textContent = "";
+        return;
+    }
 
-    // das Objekt, das wir anzeigen wollen
-    const toShow = todaysMsg ? todaysMsg : data[0];
+    textEl.textContent = row.message || "–";
+    if (metaEl) metaEl.textContent = `Nachricht für: ${row.date_for}`;
 
-    // im select auswählen
-    selectEl.value = toShow.id;
-
-    // Text anzeigen
-    textEl.textContent = toShow.message || "–";
-    if (metaEl) metaEl.textContent = `Nachricht für: ${toShow.date_for}`;
 
     // Wechsel-Handler
     selectEl.onchange = () => {

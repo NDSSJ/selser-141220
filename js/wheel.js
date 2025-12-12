@@ -144,7 +144,7 @@ if (wheelCanvas) {
     // ---- Daily-Spin-Helper ----
     function alreadySpunToday() {
         const last = localStorage.getItem("wheelLastSpin");
-        if (last) return false;
+        if (!last) return false;
 
         const today = new Date().toISOString().slice(0, 10);
         return last === today;

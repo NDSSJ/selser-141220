@@ -62,9 +62,16 @@ document.addEventListener("DOMContentLoaded", () => {
     // Die Sätze, die nacheinander erscheinen
     const introSlides = [
         "Hellooo Selissss 💚",
-        "Ich hab etwas für dich gemacht",
-        "Eine kleine eigene Welt für dich, für uns, mit Sachen, die nur wir beide nutzen können.",
+        "Ich habe mir Gedanken gemacht",
+        "Und habe etwas kleines für dich gemacht",
+        "Was kleines für UNS gemacht",
+        "Etwas, wo Erinnerungen festgehalten werden können",
+        "Etwas, das uns unterhält",
+        "Ich habe mir 2 Monate Mühe gegeben",
+        "Ich hoffe ich konnte es verheimlichen",
+        "Ich hab mein bestes gegeben",
         "Damit du immer etwas hast, das dich lächeln lässt.",
+        "Weil dein Lächeln unbezahlbar ist",
         "Weil du für mich das Wichtigste bist, herseyimsin",
         "Also Selis, bist du bereit alles zu sehen?🥹"
     ];

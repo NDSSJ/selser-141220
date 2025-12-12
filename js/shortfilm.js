@@ -164,7 +164,7 @@
         { type: "image", src: "assets/Images/shortfilm/Szene4.png", duration: 4000 },
         { type: "text", text: "Glücklich las er die Nachricht, jetzt wird Supernatural geschaut", duration: 4000 },
         { type: "image", src: "assets/Images/shortfilm/Szene5.png", duration: 4000 },
-        { type: "text", text: "So lagen beide in getrennten Betten, Hunderte sogar Tausende Kilometer entfernt", duration: 4000 },
+        { type: "text", text: "So lagen beide in getrennten Betten, Hunderte sogar Tausende Meter voneinander entfernt", duration: 4000 },
         { type: "text", text: "Aber im Herzen waren sie am selben Ort", duration: 4000 },
         { type: "image", src: "assets/Images/shortfilm/Szene6.png", duration: 4000 },
         { type: "text", text: "Und so zog sich das ganze über Wochen und Monate", duration: 4000 },
@@ -507,7 +507,7 @@
     if (!overlay || !pwInput || !unlockBtn) return;
 
     // ❗ HIER: dein Passwort
-    const KURZFILM_PASSWORD = "14122020";
+    const KURZFILM_PASSWORD = "iloveyou";
 
     function unlock() {
         const val = (pwInput.value || "").trim();

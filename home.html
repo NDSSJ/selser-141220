@@ -331,7 +331,46 @@
                     <br> Heute versuche ich die Minispiele im Online Modus zu machen, so dass wir es auf der Fahrt
                     spielen könnten. Das ding ist, ich weiß nicht wann ich dir die Website geben soll, morgens oder
                     Abends. Ich tendiere eher zu morgens, dann können wir uns die Seite im Zug angucken.
-
+                </p>
+                ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                <p> <strong>(05.12.2025)</strong>
+                    <br> Heute haben ich von Donnerstag auf Freitag dich alleine schlafen lassen, sorry askim. Ich hab
+                    deinen Adventskalender Programmiert. Ich überlege noch einen zu machen aber einen Virtuellen halt.
+                    Mal schauen ob ich das noch hinkriege.
+                </p>
+                ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                <p> <strong>(06.12.2025)</strong>
+                    <br> In letzter Zeit bin ich sehr unkreativ/motivationslos. Ich muss aber weiter machen, es ist noch
+                    ca. 1 Woche bis du alles bekommst. Jetzt versuch ich alles zu füllen.
+                    <br> Ich hab auch teilweise vergessen dieses Tagebuch weiter zu führen, hier würde bestimmt das
+                    doppelte drin stehen, aber manchmal habe ich vergessen hier was einzutragen als ich fertig war/bevor
+                    ich losgelegt habe.
+                </p>
+                ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                <p> <strong>(10.12.2025)</strong>
+                    <br> Noch 4 Tage bis zum Jahrestag. Ich weiß um ehrlich zu sein nicht mehr was ich machen soll. Ich
+                    habe das "Wer hat das gesagt" Spiel aufgegeben. Ich habe keine Zitate oder so gefunden die mir
+                    helfen könnten für das Spiel.
+                    <br> Ich frage mich ob ich noch irgendwas tun kann, aber mir fällt gar nichts ein. Ich bin nur
+                    unnormal glücklick wegen Samstag/Sonntag. ICH WILL DIR DIE GESCHENKE GEBEN!!! Das eine Geschenk
+                    kommt aber wahrscheinlich nicht an...
+                    <br> Naja egal so ist es. Ich habe noch bisschen Zeit mir auszudenken was ich tun kann. Vielleicht
+                    fällt mir etwas ein. Ich dachte ich mache einen Kalorienzähler undso. Das wäre sogar echt machbar,
+                    aber ich will das eher als eigene Seite oder vielleicht sogar App machen. Das wär vieeel geiler.
+                </p>
+                ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                <p> <strong>(12.12.2025)</strong>
+                    <br> Morgen geht's looooos, ich bin so gespannt auf deine Reaktion. Du wirst dich schon freueeeen.
+                    Ich mache gerade den letzten Feinschliff den ich noch machen kann, Fehler beheben etc.
+                    <br> Ich HOFFE ich schaffe es noch die Nachricthen für das Spiel rauszusuchen oder mehr Bilder und
+                    Fotos von uns (dir) in die slideshow zu tun, hab ja in letzter Zeit wunderschöne bekommen UFFFF
+                </p>
+                ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                <p>
+                    Das war's schon askim. Ich versuche auf deine Verbesserungsvorschläge zu hören, falls du welche
+                    haben solltest. Ich kann die Website immer aktualisieren und verändern. Ich wünsche uns morgen einen
+                    wunderschönen Jahrestag in Amsterdam.
+                    <br> <br> <br> <br> <strong> Herseyimsin melegim. Son günümüze kadar, Kalbimiz durana kadar, Aşkimiz mezara kadar </strong>
                 </p>
 
             </section>
@@ -853,7 +892,7 @@
                     </div>
 
 
-                    <p>Ich liebe dich einmal bis zum Mond und zurück mal unendlich birtanem </p>
+                    <p>Oh oh, noluyor?! <br>Sieht so aus als ob Sercan dich bis zum Mond und wieder zurück liebt </p>
                     <button id="closeModal" class="close-btn">Schließen</button>
                 </div>
             </div>
@@ -864,29 +903,42 @@
                 <p>Hier sind Nachrichten von unserer 5 Jährigen Beziehung, rate mal von wem und wann die Nachricht war
                 </p>
 
-                <div class="quiz-card">
-                    <p id="quizText" class="quiz-text">…</p>
+                <!-- NEU: Wrapper für Quiz + Hinweis -->
+                <div class="quiz-layout">
 
-                    <div class="quiz-options">
-                        <label>
-                            <input type="radio" name="guessPerson" value="selinay">
-                            Selinay
-                        </label>
-                        <label>
-                            <input type="radio" name="guessPerson" value="sercan">
-                            Sercan
-                        </label>
+                    <!-- LINKE BOX: Quiz -->
+                    <div class="quiz-card">
+                        <p id="quizText" class="quiz-text">…</p>
+
+                        <div class="quiz-options">
+                            <label>
+                                <input type="radio" name="guessPerson" value="selinay">
+                                Selinay
+                            </label>
+                            <label>
+                                <input type="radio" name="guessPerson" value="sercan">
+                                Sercan
+                            </label>
+                        </div>
+
+                        <label for="guessYear" class="quiz-label">Jahr</label>
+                        <input id="guessYear" type="number" class="quiz-input" placeholder="2021" min="2019" max="2035">
+
+                        <div class="quiz-buttons">
+                            <button id="checkQuote" class="quiz-btn">Auflösen</button>
+                            <button id="nextQuote" class="quiz-btn quiz-btn-secondary">Nächste</button>
+                        </div>
+
+                        <p id="quizResult" class="quiz-result"></p>
                     </div>
 
-                    <label for="guessYear" class="quiz-label">Jahr</label>
-                    <input id="guessYear" type="number" class="quiz-input" placeholder="2021" min="2019" max="2035">
-
-                    <div class="quiz-buttons">
-                        <button id="checkQuote" class="quiz-btn">Auflösen</button>
-                        <button id="nextQuote" class="quiz-btn quiz-btn-secondary">Nächste</button>
+                    <!-- RECHTE BOX: Hinweis -->
+                    <div class="quiz-warning-card">
+                        <h3>Hinweis</h3>
+                        <p>Das Spiel ist noch nicht fertig. 🛠️</p>
+                        <p>Hier können später mehr Fragen, Auswertungen und Extras dazukommen.</p>
                     </div>
 
-                    <p id="quizResult" class="quiz-result"></p>
                 </div>
             </section>
 
@@ -935,7 +987,7 @@
                     <div class="song-card" data-audio="music/song6.mp3">
                         <img src="assets/Images/WaitingIcon.png" alt="Song 6 Cover">
                         <h4>Keine Ahnung mehr</h4>
-                        <p>Kannst ja gerne was vorschlagen</p>
+                        <p>Vielleicht bald etwas von Camp Rock?</p>
                     </div>
                 </div>
 
@@ -1223,11 +1275,9 @@
 
                 <div class="locked-player">
                     <div class="locked-stage">
-                        <img id="lockedImage" class="locked-Image hidden" />
-                        <p id="lockedText" class="locked-text"></p>
+                        <img id="lockedImage" class="locked-image hidden" alt="Kurzfilm Szene" />
 
-                        <!-- Hier einfügen -->
-                        <button id="lockedStartBtn" class="hidden">Kurzfilm starten</button>
+                        <p id="lockedText" class="locked-text"></p>
                     </div>
                     <!-- Neuer Start-Button in der Mitte -->
                     <div class="locked-controls">
@@ -1246,12 +1296,12 @@
                     </div>
                 </div>
                 <!-- Hintergrundmusik für den Kurzfilm -->
-                <audio id="lockedMusic" src="Music/Anlatamam.mp3"></audio>
+                <audio id="lockedMusic" src="Music/Anlatamam.mp3" loop></audio>
 
                 <!-- Lautstärke nur für den Kurzfilm -->
                 <div class="locked-volume-row">
                     <label for="lockedVolume">Lautstärke (Kurzfilm)</label>
-                    <input id="lockedVolume" type="range" min="0" max="0.2" step="0.01" value="0.1">
+                    <input id="lockedVolume" type="range" min="0" max="0.5" step="0.01" value="0.1">
                 </div>
 
                 <!-- Timeline-Scroll-Fenster -->
@@ -1386,8 +1436,10 @@
             </section>
 
             <section id="panel-advent" class="panel">
-                <h2>🎄 Adventskalender 2025</h2>
-                <p class="mini-subtitle">Jeden Tag ein Türchen – erst ab dem jeweiligen Datum öffnbar ✨</p>
+                <h2>🎄 Unser Adventskalender 🎄</h2>
+                <p class="mini-subtitle">Jeden Tag ein Türchen - was könnte da drin sein? ✨</p>
+
+                <button id="adventResetBtn" class="advent-reset-btn">Alle Türchen zurücksetzen 🔄</button>
 
                 <div id="adventGrid" class="advent-grid"></div>
             </section>
@@ -1404,7 +1456,15 @@
                 </div>
             </div>
 
-
+            <div id="adventOpenOverlay" class="advent-open-overlay hidden">
+                <div class="advent-open-card">
+                    <div class="advent-open-gif-wrap">
+                        <img id="adventOpenGif" src="" alt="Advent Überraschung">
+                    </div>
+                    <p id="adventOpenText"></p>
+                    <button id="adventOpenClose" class="advent-open-close">Schließen</button>
+                </div>
+            </div>
 
         </main>
 
