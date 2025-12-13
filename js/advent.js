@@ -80,10 +80,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Nur im Dezember 2025 wird wirklich limitiert
 
-        //   if (today.getFullYear() === CALENDAR_YEAR && today.getMonth() === 11) {
-        //      // 0 = vor dem 1.12 -> nix, sonst Tag des Monats
-        //      return Math.min(24, today.getDate());
-        //  }
+        if (today.getFullYear() === CALENDAR_YEAR && today.getMonth() === 11) {
+            // 0 = vor dem 1.12 -> nix, sonst Tag des Monats
+            return Math.min(24, today.getDate());
+        }
 
         // In allen anderen Monaten / Jahren: alles freigeben (praktisch zum Testen)
         return 24;
